@@ -1,0 +1,21 @@
+<resources>
+    // App description
+    <string name="app_logo">App logo</string>
+    <string name="app_name">My Art Shop</string>
+    <string name="appTitle_topAppBar">Art dealer</string>
+
+    // Dark - / Light - mode
+    <string name="light_mode">Light mode</string>
+    <string name="dark_mode">Dark mode</string>
+
+    // Startpage strings
+    <string name="choose_category">See photos based on</string>
+    <string name="button_name_artist">Artist</string>
+    <string name="button_name_category">Category</string>
+    <string name="shopping_cart">My shopping cart</string>
+    <string name="chosen_photos">Photos in cart: %d</string>
+    <string name="total_prize">Total prize inc. mva: %d</string>
+
+    // Image titles
+    <string name="title_1">Image title 1</string>
+</resources>
