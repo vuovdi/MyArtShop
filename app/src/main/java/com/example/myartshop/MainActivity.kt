@@ -123,7 +123,8 @@ fun ArtShopApp(modifier: Modifier = Modifier) {
 @Composable
 fun ThemeToggleButton(useDarkTheme: Boolean, onToggle: (Boolean) -> Unit) {
     Button(onClick = {onToggle(!useDarkTheme) }) {
-        Text(text = if (useDarkTheme) stringResource(R.string.light_mode) else stringResource(R.string.dark_mode))
+        Text(text = if (useDarkTheme) stringResource(R.string.light_mode) else
+            stringResource(R.string.dark_mode))
     }
 }
 
