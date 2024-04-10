@@ -1,4 +1,4 @@
-package com.example.myartshop.ui.theme.components
+package com.example.myartshop.ui.ui.components
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text

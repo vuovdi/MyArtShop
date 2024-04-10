@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.myartshop.ui.theme.theme.MyArtShopTheme
+import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 
 
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package com.example.myartshop.ui.theme.theme
+package com.example.myartshop.ui.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
