@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.myartshop.ui.ui.OrderViewModel
+import com.example.myartshop.ui.OrderViewModel
 import com.example.myartshop.ui.ui.StartPageScreen
 
 

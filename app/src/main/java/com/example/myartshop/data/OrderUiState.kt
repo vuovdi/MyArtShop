@@ -1,13 +1,24 @@
 package com.example.myartshop.data
 
+import androidx.annotation.DrawableRes
+
 /**
  * Data class that represents the current UI state
  */
+data class Painting(
+    @DrawableRes val imageResId: Int,
+    val artist: String,
+    val category: String
+)
+
+data class CartItem(
+    val painting: Painting,
+    val frameType: String,
+    val frameWidth: Int,
+    val photoSize: String,
+    val price: Double
+)
 data class OrderUiState(
-    /** Flavor of the cupcakes in the order (such as "Chocolate", "Vanilla", etc..) */
-    val frame_width: String = "",
-    /** Selected date for pickup (such as "Jan 1") */
-    val photo_size: String = "",
-    /** Total price for the order */
-    val frame_type: String = "",
+    val paintingsList: List<Painting> = emptyList(),
+    val cartItems: List<CartItem> = emptyList()
 )
