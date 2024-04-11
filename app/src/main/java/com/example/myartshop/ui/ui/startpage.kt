@@ -2,7 +2,6 @@ package com.example.myartshop.ui.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,17 +14,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,21 +28,23 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myartshop.R
 import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 
 @Composable
-fun StartPageScreen(modifier: Modifier = Modifier) {
-    val isDarkTheme = isSystemInDarkTheme()
-    val (darkTheme, setDarkTheme) = remember { mutableStateOf(isDarkTheme) }
+fun StartPageScreen(
+    /**0 : artist, 1 : category + onClick*/
+    showByOptions: Boolean = true,
+    modifier: Modifier = Modifier) {
+//    val isDarkTheme = isSystemInDarkTheme()
+//    val (darkTheme, setDarkTheme) = remember { mutableStateOf(isDarkTheme) }
 
-    MyArtShopTheme (darkTheme = darkTheme) {
+//    MyArtShopTheme (darkTheme = darkTheme) {
         Column(
             modifier = modifier,
-            verticalArrangement = Arrangement.SpaceBetween
+//            verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -71,7 +66,7 @@ fun StartPageScreen(modifier: Modifier = Modifier) {
                     onClick = { /*TODO*/ }
                 ) {
                     Text(
-                        text = stringResource(R.string.button_name_artist),
+                        text = stringResource(R.string.artist),
                         style = MaterialTheme.typography.labelLarge
                     )
                 }
@@ -82,7 +77,7 @@ fun StartPageScreen(modifier: Modifier = Modifier) {
                     onClick = { /*TODO*/ }
                 ) {
                     Text(
-                        text = stringResource(R.string.button_name_category),
+                        text = stringResource(R.string.category),
                         style = MaterialTheme.typography.labelLarge
                     )
                 }
@@ -97,11 +92,11 @@ fun StartPageScreen(modifier: Modifier = Modifier) {
                 )
             }
             ShoppingInfo()
-            ThemeToggleButton(useDarkTheme = darkTheme, onToggle = setDarkTheme)
+//            ThemeToggleButton(useDarkTheme = darkTheme, onToggle = setDarkTheme)
         }
 
     }
-}
+//}
 
 @Composable
 fun ThemeToggleButton(useDarkTheme: Boolean, onToggle: (Boolean) -> Unit) {
@@ -117,6 +112,10 @@ fun ShoppingInfo(modifier: Modifier = Modifier) {
     val sumPictures by remember { mutableIntStateOf(pictures) }
     val totalprice = 0
 
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.SpaceAround
+    ){
     Text(
         text = stringResource(R.string.chosen_photos, pictures),
         style = MaterialTheme.typography.bodyLarge,
@@ -124,38 +123,30 @@ fun ShoppingInfo(modifier: Modifier = Modifier) {
             .padding(dimensionResource(R.dimen.padding_small))
     )
     Text(
-        text = stringResource(R.string.total_prize, totalprice),
+        text = stringResource(R.string.total_price, totalprice),
         style = MaterialTheme.typography.bodyLarge,
         modifier = modifier
             .padding(dimensionResource(R.dimen.padding_small))
     )
 
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.SpaceAround
-    ){
-        ShoppingCartItems(
-            imageRes = R.drawable.image1,
-            title = "test",
-            framechoices = "wood test",
-            prize = "20",
-            onButtonClick = { /* TODO: Implement button click logic */ }
-        )
+
+    ShoppingCartItems()
     }
 }
 
 @Composable
 fun ShoppingCartItems(
-    imageRes: Int,
-    title: String,
-    framechoices: String,
-    prize: String,
-    onButtonClick: () -> Unit
+//    imageRes: Int,
+    title: String = "test",
+    frameChoices: String = "tre",
+    price: String = "3kr",
+//    onButtonClick: () -> Unit
 ) {
+//    Card(
+//        colors = CardDefaults.cardColors(
+//            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+//        )
     Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
             .fillMaxWidth()
@@ -166,8 +157,8 @@ fun ShoppingCartItems(
             verticalAlignment = Alignment.CenterVertically
         ){
             Image(
-                painter = painterResource(id = imageRes),
-                contentDescription = null,
+                painter = painterResource(R.drawable.image1),
+                contentDescription = "yapp yapp yapp",
                 modifier = Modifier
                     .size(120.dp)
                     .clip(shape = RoundedCornerShape(8.dp)),
@@ -175,38 +166,46 @@ fun ShoppingCartItems(
             )
             Spacer(modifier = Modifier.width(16.dp))
 
-            Column(
-                modifier = Modifier.weight(2f)
-            ) {
-                Text(text = stringResource(R.string.title, title))
-                Text(text = stringResource(R.string.Frame_choices, framechoices))
-                Text(text = stringResource(R.string.Prize, prize))
+            Column(modifier = Modifier.weight(2f)) {
+                Text(text = "yap")
+                Text(text = "sap")
+                Text(text = "dap")
             }
             Spacer(modifier = Modifier.width(16.dp))
             Button(
-                onClick = { onButtonClick() },
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .fillMaxWidth()
-                    .padding(end = 16.dp)
+                onClick = {},
+                modifier = Modifier.align(Alignment.Top)// Plasserer knappen øverst til høyre
             ) {
                 Text(text = stringResource(R.string.Remove))
             }
+            Spacer(modifier = Modifier.width(16.dp))
+        }
+
+/** DETTE FUNKA IKKE :( SKJØNNER IKKE HVORFOR, MEN FLYTTA HARD KODEDE LINJER LITT OPP*/
+//            Column(
+//                modifier = Modifier.weight(2f)
+//            ) {
+//                Text(text = stringResource(R.string.Prize, price))
+//                Text(text = stringResource(R.string.Frame_choices, frameChoices))
+//                Text(text = stringResource(R.string.Prize, price))
+//            }
+
         }
     }
-}
+
 @Preview
 @Composable
 fun MyArtShopPreview() {
-    MyArtShopTheme(darkTheme = false) {
+//    MyArtShopTheme(darkTheme = false) {
+    MyArtShopTheme {
         StartPageScreen()
     }
 }
 
-@Preview
-@Composable
-fun ArtShopDarkPreview() {
-    MyArtShopTheme(darkTheme = true) {
-        StartPageScreen()
-    }
-}
+//@Preview
+//@Composable
+//fun ArtShopDarkPreview() {
+//    MyArtShopTheme(darkTheme = true) {
+//        StartPageScreen()
+//    }
+//}

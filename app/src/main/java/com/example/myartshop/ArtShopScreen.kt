@@ -36,16 +36,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.myartshop.ui.OrderViewModel
-import com.example.myartshop.ui.ui.ImagesScreen
+import com.example.myartshop.ui.ui.SelectedPhotoScreen
 import com.example.myartshop.ui.ui.StartPageScreen
 
 enum class ArtShopScreen(@StringRes val title:Int) {
     Start(title = R.string.main_page),
+    ArtistList(title = R.string.artist),
+    CategoryList(title = R.string.category),
     PaintingsList(title = R.string.paintings),
-    PaintingViewer(title = R.string.painting_choices),
-    Summary(title = R.string.order_summary)
-
-
+    PaintingViewer(title = R.string.chosen_painting),
+    Summary(title = R.string.payment)
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,7 +91,8 @@ fun ArtShopApp(
                 navigateUp = { /* TODO: implement back navigation */ }
             )
         }
-    ) { innerPadding ->
+    )
+    { innerPadding ->
         val uiState by viewModel.uiState.collectAsState()
 
         NavHost(
@@ -105,18 +106,25 @@ fun ArtShopApp(
             composable(route = ArtShopScreen.Start.name) {
                 StartPageScreen()
             }
+//
+//            composable(route = ArtShopScreen.PaintingViewer.name) {
+//                ImagesScreen(TODO()) {
+//
+//                }
+//            }
+//
+//            composable(route = ArtShopScreen.PaintingViewer.name) {
+//                SelectedPhotoScreen() {
+//                }
+//            }
+//
+//            composable(route = ArtShopScreen.Summary.name) {
+//                SummaryScreen() {
 
-            composable(route = ArtShopScreen.PaintingViewer.name) {
-                ImagesScreen(TODO()) {
-
-                }
-            }
-
-            composable(route = ArtShopScreen.PaintingViewer.name) {
-                SelectedPhotoScreen()
+//
+//                }
             }
         }
         //val uiState by viewModel.uiState.collectAsState()
 
     }
-}
