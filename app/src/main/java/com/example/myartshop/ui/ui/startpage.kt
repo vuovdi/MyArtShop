@@ -181,7 +181,8 @@ fun ShoppingCartItems(
             Spacer(modifier = Modifier.width(16.dp))
         }
 
-/** DETTE FUNKA IKKE :( SKJØNNER IKKE HVORFOR, MEN FLYTTA HARD KODEDE LINJER LITT OPP*/
+/** DETTE FUNKA IKKE :( SKJØNNER IKKE HVORFOR, MEN FLYTTA HARD KODEDE VERSJON LITT OPP (YAP SAP PAP)
+ * */
 //            Column(
 //                modifier = Modifier.weight(2f)
 //            ) {
