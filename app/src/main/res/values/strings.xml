@@ -1,4 +1,10 @@
 <resources>
+
+    <string name="main_page">Main Page</string>
+    <string name="paintings">Paintings</string>
+    <string name="painting_choices">Painting Choices</string>
+    <string name="order_summary">Order Summary</string>
+
     // App description
     <string name="app_logo">App logo</string>
     <string name="app_name">My Art Shop</string>
