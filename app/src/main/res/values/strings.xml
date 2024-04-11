@@ -8,6 +8,9 @@
     <string name="light_mode">Light mode</string>
     <string name="dark_mode">Dark mode</string>
 
+    //Screen
+    <string name="back_button">Back</string>
+
     // Startpage strings
     <string name="choose_category">See photos based on</string>
     <string name="button_name_artist">Artist</string>
@@ -18,5 +21,67 @@
     <string name="subtotal_price">Subtotal %s</string>
 
     // Image titles
-    <string name="title_1">Image title 1</string>
+    <string name="title_1">title 1</string>
+    <string name="title_2">title 2</string>
+    <string name="title_3">title 3</string>
+    <string name="title_4">title 4</string>
+    <string name="title_5">title 5</string>
+    <string name="title_6">title 6</string>
+    <string name="title_7">title 7</string>
+    <string name="title_8">title 8</string>
+    <string name="title_9">title 9</string>
+    <string name="title_10">title 10</string>
+    <string name="title_11">title 11</string>
+    <string name="title_12">title 12</string>
+    <string name="title_13">title 13</string>
+    <string name="title_14">title 14</string>
+    <string name="title_15">title 15</string>
+    <string name="title_16">title 16</string>
+
+    //categories
+    <string name="nature">Nature</string>
+    <string name="food">Food</string>
+    <string name="sport">Sport</string>
+    <string name="misc">Misc</string>
+    <string name="buildings">Buildings</string>
+
+    //Frame sizes
+    <string name="wood">Wood</string>
+    <string name="metal">Metal</string>
+    <string name="plastic">Plastic</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+    <string name="small_width">10 mm</string>
+    <string name="medium_width">15 mm</string>
+    <string name="large_width">20 mm</string>
+
+    //Shopping cart
+    <string name="title">Title: %d</string>
+    <string name="Frame_choices">Frame choices: %d</string>
+    <string name="Prize">Prize: %d</string>
+    <string name="Remove">Remove</string>
+
+    //Artists
+    <string name="artist1_name">Un known</string>
+    <string name="artist2_name">Kong Harald</string>
+    <string name="artist3_name">Dronning Sonja</string>
+    <string name="artist4_name">Mette Marit</string>
+    <string name="artist5_name">Håkon Magnus</string>
+    <string name="artist6_name">Martha Louise</string>
+
+    <string name="artist1_country">Spain</string>
+    <string name="artist2_country">Norway</string>
+    <string name="artist3_country">India</string>
+    <string name="artist4_country">Kazakhstan</string>
+    <string name="artist5_country">Thailand</string>
+    <string name="artist6_country">Portugal</string>
+
+    <string name="artist1_birth">Un known</string>
+    <string name="artist2_birth">Kong Harald</string>
+    <string name="artist3_birth">Dronning Sonja</string>
+    <string name="artist4_birth">Mette Marit</string>
+    <string name="artist5_birth">Håkon Magnus</string>
+    <string name="artist6_birth">Martha Louise</string>
+
 </resources>
