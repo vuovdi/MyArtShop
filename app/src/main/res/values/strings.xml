@@ -91,4 +91,10 @@
     <string name="artist5_birth">Håkon Magnus</string>
     <string name="artist6_birth">Martha Louise</string>
 
+    //Selected Image screen
+    <string name="details">Photo details</string>
+    <string name="various_details">Artist: Un Known, price: 100NOK</string>
+    <string name="frame_options">Chosen frame options: </string>
+    <string name="price_photo_and_frame">Calculated price: </string>
+
 </resources>
