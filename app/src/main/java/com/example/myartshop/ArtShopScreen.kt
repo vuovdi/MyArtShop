@@ -65,6 +65,7 @@ import com.example.myartshop.data.artist6
 import com.example.myartshop.data.photos
 import com.example.myartshop.ui.OrderViewModel
 import com.example.myartshop.ui.ui.CategoriesPage
+import com.example.myartshop.ui.ui.PhotoGridScreen
 import com.example.myartshop.ui.ui.SelectArtistPage
 import com.example.myartshop.ui.ui.SelectedPhotoScreen
 import com.example.myartshop.ui.ui.StartPageScreen
@@ -134,35 +135,31 @@ fun ArtShopApp(
                 .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
         ) {
+
+            /** START SCREEN - SUCCESSFULLY NAVIGATES TO ARTIST LIST */
             composable(route = ArtShopScreen.Start.name) {
                 StartPageScreen(
                     viewModel = viewModel,
                     shoppingCart = viewModel.shoppingCart.value,
-                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name) },
+//                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name) },
+                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.Summary.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtShopScreen.CategoryList.name) }
                 )
             }
-
+            /** ARTIST LIST */
             composable(route = ArtShopScreen.ArtistList.name) {
                 val context = LocalContext.current
                 Log.d("ArtShopApp", "ArtistList composable called")
                 val artistList = listOf(artist1, artist2, artist3, artist4, artist5, artist6)
                 SelectArtistPage(artistList = artistList)
             }
-            composable(route = ArtShopScreen.CategoryList.name) {
-                val context = LocalContext.current
-                Log.d("ArtShopApp", "Category composable called")
+
+            composable(route = ArtShopScreen.PaintingViewer.name) {
                 val yourPhotoList = photos
-                Log.d("ArtShopApp", "photos passed")
-                CategoriesPage(categories = Category.entries, photos = yourPhotoList)
-                Log.d("ArtShopApp", "page passed and maybe failed")
+                PhotoGridScreen(photos = yourPhotoList)
             }
-//
-//            composable(route = ArtShopScreen.PaintingViewer.name) {
-//                SelectedPhotoScreen() {
-//                }
-//            }
-//
+
+            /** SUMMARY/PAYMENT -- CAN SUCCESSFULLY BE NAVIGATED TO AND NAVIGATES TO POPUP-DIALOG -> HOMESCREEN */
             composable(route = ArtShopScreen.Summary.name) {
                 val paintingsList = DataSource.paintingsList
                 val cartItems = DataSource.cartItems
@@ -171,7 +168,9 @@ fun ArtShopApp(
                 var showPopupDialog by remember { mutableStateOf(false) }
 
                 if (showPopupDialog) {
-                    PopupDialog(navController = navController)
+                    PopupDialog(
+                        navController = navController
+                    )
                 } else {
                     SummaryScreen(
                         orderUiState = OrderUiState(
@@ -179,53 +178,54 @@ fun ArtShopApp(
                             cartItems = cartItems
                         ),
                         viewModel = viewModel,
-                        onPay = { showPopupDialog = true }, // Set showPopupDialog to true
+                        onPay = { showPopupDialog = true  }, // Set showPopupDialog to true
                         modifier = modifier
                     )
                 }
             }
-            //val uiState by viewModel.uiState.collectAsState()
-
         }
     }
 }
+
 
 @Composable
 fun PopupDialog(
     navController: NavHostController,
 ) {
-    (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(0.5f)
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .padding(16.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.onPrimaryContainer
-        )
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Your payment is made, \n\n Thank you",
-                modifier = Modifier.padding(16.dp),
-                color = MaterialTheme.colorScheme.onPrimary
+    Dialog(onDismissRequest = { navController.popBackStack(ArtShopScreen.Start.name, inclusive = false)}) {
+        (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(0.5f)
+        Card(
+            modifier = Modifier
+                .padding(16.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
 
-            TextButton(
-                onClick = {
-                    navController.popBackStack(ArtShopScreen.Start.name, inclusive = false)
-                },
-                modifier = Modifier.padding(8.dp)
+        ) {
+            Column(
+                modifier = Modifier,
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(R.string.Prize),
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
+                    text = "Your payment was successful",
+                    modifier = Modifier.padding(16.dp).align(Alignment.Start),
+                    color = MaterialTheme.colorScheme.onPrimary)
+                Text(
+                    text = "Thank you for choosing us as your art provider",
+                    modifier = Modifier.padding(16.dp),
+                    color = MaterialTheme.colorScheme.onPrimary)
+
+
+                TextButton(
+                    onClick = { navController.popBackStack(ArtShopScreen.Start.name, inclusive = false) },
+                    modifier = Modifier.padding(8.dp),
+                ) {
+                    Text(
+                        text  = "ok",
+                        color = MaterialTheme.colorScheme.onPrimary)
+                }
             }
         }
     }

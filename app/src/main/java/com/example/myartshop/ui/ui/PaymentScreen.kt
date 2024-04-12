@@ -77,14 +77,14 @@ fun SummaryScreen(
         SummaryItem("Expiry date:", "4/25", modifier)
         SummaryItem("CVS number:", "233", modifier)
 
+        Button(
+            modifier = Modifier,
+            onClick = onPay
+        ) {
+            Text(stringResource(R.string.payment))
+        }
+    }
 
-    }
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = onPay
-    ) {
-        Text(stringResource(R.string.payment))
-    }
 }
 
 @Composable

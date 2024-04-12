@@ -2,6 +2,7 @@ package com.example.myartshop.ui
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.myartshop.data.Artist
 import com.example.myartshop.data.CartItem
 import com.example.myartshop.data.DataSource
 import com.example.myartshop.data.OrderUiState
@@ -18,10 +19,18 @@ class OrderViewModel: ViewModel() {
     val selectedPhoto = mutableStateOf<Painting?>(null)
     val selectedFrameOptions = mutableStateOf<Pair<String, Int>?>(null)
     val shoppingCart = mutableStateOf<List<CartItem>>(emptyList())
+    private var _selectedArtist: Artist? = null
+    val selectedArtist: Artist?
+        get() = _selectedArtist
 
+    fun setSelectedArtist(artist: Artist) {
+        _selectedArtist = artist
+    }
     init {
         updatePaintingsList(DataSource.paintingsList)
     }
+
+
 
     private fun updatePaintingsList(paintingsList: List<Painting>) {
         _uiState.value = _uiState.value.copy(paintingsList = paintingsList)

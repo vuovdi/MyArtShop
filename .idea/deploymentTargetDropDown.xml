@@ -2,13 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="MyArtShopPreview">
+      <entry key="PhotoGridScreenPreview">
         <State />
       </entry>
       <entry key="SelectArtistPagePreview">
         <State />
       </entry>
       <entry key="SelectCategoryPagePreview">
+        <State />
+      </entry>
+      <entry key="SelectedImagePreview">
         <State />
       </entry>
       <entry key="SummaryScreenPreview">
