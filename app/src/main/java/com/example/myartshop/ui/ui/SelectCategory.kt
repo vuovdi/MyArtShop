@@ -1,5 +1,6 @@
 package com.example.myartshop.ui.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -70,6 +71,7 @@ fun CategoryCard(category: Category, photos: List<Photo>) {
                 Text(text = "Most expensive photo: ${mostExpensivePhotoPerCategory[category] ?: 0.0f}")
                 Text(text = "Most popular photo: ...")
             }
+
         }
     }
 }

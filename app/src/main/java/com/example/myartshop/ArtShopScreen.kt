@@ -53,6 +53,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.myartshop.data.Category
 import com.example.myartshop.data.DataSource
 import com.example.myartshop.data.OrderUiState
 import com.example.myartshop.data.artist1
@@ -61,7 +62,9 @@ import com.example.myartshop.data.artist3
 import com.example.myartshop.data.artist4
 import com.example.myartshop.data.artist5
 import com.example.myartshop.data.artist6
+import com.example.myartshop.data.photos
 import com.example.myartshop.ui.OrderViewModel
+import com.example.myartshop.ui.ui.CategoriesPage
 import com.example.myartshop.ui.ui.SelectArtistPage
 import com.example.myartshop.ui.ui.SelectedPhotoScreen
 import com.example.myartshop.ui.ui.StartPageScreen
@@ -136,7 +139,7 @@ fun ArtShopApp(
                     viewModel = viewModel,
                     shoppingCart = viewModel.shoppingCart.value,
                     onArtistButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name) },
-                    onCategoryButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name) }
+                    onCategoryButtonClicked = { navController.navigate(ArtShopScreen.CategoryList.name) }
                 )
             }
 
@@ -145,6 +148,14 @@ fun ArtShopApp(
                 Log.d("ArtShopApp", "ArtistList composable called")
                 val artistList = listOf(artist1, artist2, artist3, artist4, artist5, artist6)
                 SelectArtistPage(artistList = artistList)
+            }
+            composable(route = ArtShopScreen.CategoryList.name) {
+                val context = LocalContext.current
+                Log.d("ArtShopApp", "Category composable called")
+                val yourPhotoList = photos
+                Log.d("ArtShopApp", "photos passed")
+                CategoriesPage(categories = Category.entries, photos = yourPhotoList)
+                Log.d("ArtShopApp", "page passed and maybe failed")
             }
 //
 //            composable(route = ArtShopScreen.PaintingViewer.name) {

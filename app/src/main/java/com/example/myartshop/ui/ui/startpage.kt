@@ -85,7 +85,7 @@ fun StartPageScreen(
 //                        .padding(dimensionResource(R.dimen.padding_medium))
                         .padding(10.dp)
                         .width(180.dp),
-                    onClick = onArtistButtonClicked
+                    onClick = onCategoryButtonClicked
                 ) {
                     Text(
                         text = stringResource(R.string.category),
