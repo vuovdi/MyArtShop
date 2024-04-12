@@ -38,11 +38,23 @@ class OrderViewModel: ViewModel() {
         }
     }
 
-    fun removeFromCart(cartItem: CartItem) {
-        shoppingCart.value = shoppingCart.value - cartItem
-    }
 
+    fun removeFromCart(cartItem: CartItem) {
+        // Få den gjeldende listen over handlekurvartikler
+        val currentCartItems = shoppingCart.value.toMutableList()
+
+        // Finn indeksen til det aktuelle elementet i handlekurven
+        val index = currentCartItems.indexOfFirst { it == cartItem }
+
+        // Hvis elementet er funnet i handlekurven, fjern det
+        if (index != -1) {
+            currentCartItems.removeAt(index)
+            shoppingCart.value = currentCartItems
+        }
+    }
 }
+
+
 
 
 //class OrderViewModel : ViewModel() {

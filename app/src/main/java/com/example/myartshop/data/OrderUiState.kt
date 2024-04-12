@@ -8,7 +8,9 @@ import androidx.annotation.DrawableRes
 data class Painting(
     @DrawableRes val imageResId: Int,
     val artist: String,
-    val category: String
+    val category: String,
+    val name: String,
+
 )
 
 data class CartItem(
@@ -20,5 +22,6 @@ data class CartItem(
 )
 data class OrderUiState(
     val paintingsList: List<Painting> = emptyList(),
-    val cartItems: List<CartItem> = emptyList()
+    val cartItems: List<CartItem> = emptyList(),
+    val price: String = ""
 )

@@ -1,15 +1,25 @@
 package com.example.myartshop
 
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -17,27 +27,45 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogWindowProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.myartshop.data.DataSource
+import com.example.myartshop.data.OrderUiState
+import com.example.myartshop.data.artist1
+import com.example.myartshop.data.artist2
+import com.example.myartshop.data.artist3
+import com.example.myartshop.data.artist4
+import com.example.myartshop.data.artist5
+import com.example.myartshop.data.artist6
 import com.example.myartshop.ui.OrderViewModel
+import com.example.myartshop.ui.ui.SelectArtistPage
 import com.example.myartshop.ui.ui.SelectedPhotoScreen
 import com.example.myartshop.ui.ui.StartPageScreen
+import com.example.myartshop.ui.ui.SummaryScreen
 
 enum class ArtShopScreen(@StringRes val title:Int) {
     Start(title = R.string.main_page),
@@ -105,13 +133,91 @@ fun ArtShopApp(
         ) {
             composable(route = ArtShopScreen.Start.name) {
                 StartPageScreen(
-                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name)},
-                    onCategoryButtonClicked = {}
+                    viewModel = viewModel,
+                    shoppingCart = viewModel.shoppingCart.value,
+                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name) },
+                    onCategoryButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name) }
                 )
             }
 
+            composable(route = ArtShopScreen.ArtistList.name) {
+                val context = LocalContext.current
+                Log.d("ArtShopApp", "ArtistList composable called")
+                val artistList = listOf(artist1, artist2, artist3, artist4, artist5, artist6)
+                SelectArtistPage(artistList = artistList)
+            }
+//
+//            composable(route = ArtShopScreen.PaintingViewer.name) {
+//                SelectedPhotoScreen() {
+//                }
+//            }
+//
+            composable(route = ArtShopScreen.Summary.name) {
+                val paintingsList = DataSource.paintingsList
+                val cartItems = DataSource.cartItems
+
+                val modifier = Modifier // Example modifier
+                var showPopupDialog by remember { mutableStateOf(false) }
+
+                if (showPopupDialog) {
+                    PopupDialog(navController = navController)
+                } else {
+                    SummaryScreen(
+                        orderUiState = OrderUiState(
+                            paintingsList = paintingsList,
+                            cartItems = cartItems
+                        ),
+                        viewModel = viewModel,
+                        onPay = { showPopupDialog = true }, // Set showPopupDialog to true
+                        modifier = modifier
+                    )
+                }
+            }
+            //val uiState by viewModel.uiState.collectAsState()
+
+        }
+    }
+}
+
+@Composable
+fun PopupDialog(
+    navController: NavHostController,
+) {
+    (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(0.5f)
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .padding(16.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Your payment is made, \n\n Thank you",
+                modifier = Modifier.padding(16.dp),
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+
+            TextButton(
+                onClick = {
+                    navController.popBackStack(ArtShopScreen.Start.name, inclusive = false)
+                },
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.Prize),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
-
-
     }
+}
+
+

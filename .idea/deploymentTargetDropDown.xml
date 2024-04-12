@@ -5,6 +5,15 @@
       <entry key="MyArtShopPreview">
         <State />
       </entry>
+      <entry key="SelectArtistPagePreview">
+        <State />
+      </entry>
+      <entry key="SelectCategoryPagePreview">
+        <State />
+      </entry>
+      <entry key="SummaryScreenPreview">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>

@@ -33,11 +33,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myartshop.R
+import com.example.myartshop.data.CartItem
+import com.example.myartshop.ui.OrderViewModel
 import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 
 @Composable
 fun StartPageScreen(
+    viewModel: OrderViewModel,
+    shoppingCart: List<CartItem>,
     /**0 : artist, 1 : category + onClick*/
     onArtistButtonClicked: () -> Unit,
     onCategoryButtonClicked: () -> Unit,
@@ -80,7 +85,7 @@ fun StartPageScreen(
 //                        .padding(dimensionResource(R.dimen.padding_medium))
                         .padding(10.dp)
                         .width(180.dp),
-                    onClick = onCategoryButtonClicked
+                    onClick = onArtistButtonClicked
                 ) {
                     Text(
                         text = stringResource(R.string.category),
@@ -97,7 +102,11 @@ fun StartPageScreen(
                     style = MaterialTheme.typography.displayMedium
                 )
             }
-            ShoppingInfo()
+            ShoppingInfo(
+                viewModel = viewModel,
+                shoppingCart = shoppingCart,
+                onRemoveItem = { cartItem -> viewModel.removeFromCart(cartItem) }
+            )
 //            ThemeToggleButton(useDarkTheme = darkTheme, onToggle = setDarkTheme)
         }
 
@@ -106,7 +115,12 @@ fun StartPageScreen(
 
 
 @Composable
-fun ShoppingInfo(modifier: Modifier = Modifier) {
+fun ShoppingInfo(
+    viewModel: OrderViewModel,
+    shoppingCart: List<CartItem>,
+    onRemoveItem: (CartItem) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val pictures = 0
     val sumPictures by remember { mutableIntStateOf(pictures) }
     val totalprice = 0
@@ -114,26 +128,27 @@ fun ShoppingInfo(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceAround
-    ){
-    Text(
-        text = stringResource(R.string.chosen_photos, pictures),
-        style = MaterialTheme.typography.bodyLarge,
-        modifier = modifier
-//            .padding(dimensionResource(R.dimen.padding_small))
-            .padding(5.dp)
-    )
-    Text(
-        text = stringResource(R.string.total_price, totalprice),
-        style = MaterialTheme.typography.bodyLarge,
-        modifier = modifier
-//            .padding(dimensionResource(R.dimen.padding_small))
-            .padding(5.dp)
-    )
+    ) {
+        Text(
+            text = stringResource(R.string.chosen_photos, pictures),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = modifier.padding(5.dp)
+        )
+        Text(
+            text = stringResource(R.string.total_price, totalprice),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = modifier.padding(5.dp)
+        )
 
-
-    ShoppingCartItems(onRemoveButtonClick = {})
+        shoppingCart.forEach { cartItem ->
+            ShoppingCartItems(
+                cartItem = cartItem,
+                onRemoveButtonClick = { onRemoveItem(cartItem) } // Send med onRemoveItem-funksjonen
+            )
+        }
     }
 }
+
 
 @Composable
 fun ShoppingCartItems(
@@ -141,7 +156,8 @@ fun ShoppingCartItems(
     title: String = "test",
     frameChoices: String = "tre",
     price: String = "3kr",
-    onRemoveButtonClick: () -> Unit
+    cartItem: CartItem,
+    onRemoveButtonClick: (CartItem) -> Unit
 ) {
 
     Card(
@@ -173,7 +189,7 @@ fun ShoppingCartItems(
             }
             Spacer(modifier = Modifier.width(16.dp))
             Button(
-                onClick = {},
+                onClick = { onRemoveButtonClick(cartItem) },
                 modifier = Modifier.align(Alignment.Top)// Plasserer knappen øverst til høyre
             ) {
                 Text(text = stringResource(R.string.Remove))
@@ -197,9 +213,14 @@ fun ShoppingCartItems(
 @Preview
 @Composable
 fun MyArtShopPreview() {
+    val viewModel: OrderViewModel = viewModel()
+
     MyArtShopTheme(darkTheme = false) {
         MyArtShopTheme {
-            StartPageScreen(onArtistButtonClicked = {}, onCategoryButtonClicked = {})
+            StartPageScreen(
+                viewModel = viewModel,
+                shoppingCart = viewModel.shoppingCart.value,
+                onArtistButtonClicked = {}, onCategoryButtonClicked = {})
         }
     }
 }
