@@ -66,6 +66,7 @@ import com.example.myartshop.data.photos
 import com.example.myartshop.ui.OrderViewModel
 import com.example.myartshop.ui.ui.CategoriesPage
 import com.example.myartshop.ui.ui.PhotoGridScreen
+import com.example.myartshop.ui.ui.PhotoItem
 import com.example.myartshop.ui.ui.SelectArtistPage
 import com.example.myartshop.ui.ui.SelectedPhotoScreen
 import com.example.myartshop.ui.ui.StartPageScreen
@@ -142,7 +143,7 @@ fun ArtShopApp(
                     viewModel = viewModel,
                     shoppingCart = viewModel.shoppingCart.value,
 //                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name) },
-                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.Summary.name) },
+                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtShopScreen.CategoryList.name) }
                 )
             }
@@ -156,10 +157,10 @@ fun ArtShopApp(
 
             composable(route = ArtShopScreen.PaintingViewer.name) {
                 val yourPhotoList = photos
-                PhotoGridScreen(photos = yourPhotoList)
+                PhotoItem(photo = yourPhotoList[0])
             }
 
-            /** SUMMARY/PAYMENT -- CAN SUCCESSFULLY BE NAVIGATED TO AND NAVIGATES TO POPUP-DIALOG -> HOMESCREEN */
+            /** SUMMARY  /PAYMENT -- CAN SUCCESSFULLY BE NAVIGATED TO AND NAVIGATES TO POPUP-DIALOG -> HOMESCREEN */
             composable(route = ArtShopScreen.Summary.name) {
                 val paintingsList = DataSource.paintingsList
                 val cartItems = DataSource.cartItems

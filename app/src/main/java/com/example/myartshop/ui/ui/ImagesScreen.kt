@@ -68,7 +68,8 @@ fun PhotoItem(photo: Photo) {
 @Composable
 fun PhotoGridScreenPreview() {
     val yourPhotoList = photos
-    PhotoGridScreen(photos = yourPhotoList)
+//    PhotoGridScreen(photos = yourPhotoList)
+    PhotoItem(photo = yourPhotoList[0])
 }
 
 
