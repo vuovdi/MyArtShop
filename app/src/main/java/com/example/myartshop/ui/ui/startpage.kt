@@ -2,6 +2,7 @@ package com.example.myartshop.ui.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,11 +15,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,12 +39,13 @@ import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 @Composable
 fun StartPageScreen(
     /**0 : artist, 1 : category + onClick*/
-    showByOptions: Boolean = true,
+    onArtistButtonClicked: () -> Unit,
+    onCategoryButtonClicked: () -> Unit,
     modifier: Modifier = Modifier) {
-//    val isDarkTheme = isSystemInDarkTheme()
-//    val (darkTheme, setDarkTheme) = remember { mutableStateOf(isDarkTheme) }
+    val isDarkTheme = isSystemInDarkTheme()
+    val (darkTheme, setDarkTheme) = remember { mutableStateOf(isDarkTheme) }
 
-//    MyArtShopTheme (darkTheme = darkTheme) {
+    MyArtShopTheme (darkTheme = darkTheme) {
         Column(
             modifier = modifier,
 //            verticalArrangement = Arrangement.SpaceBetween
@@ -61,9 +65,10 @@ fun StartPageScreen(
             ) {
                 Button(
                     modifier = modifier
-                        .padding(dimensionResource(R.dimen.padding_medium))
+//                        .padding(dimensionResource(R.dimen.padding_medium))
+                        .padding(10.dp)
                         .width(180.dp),
-                    onClick = { /*TODO*/ }
+                    onClick = onArtistButtonClicked
                 ) {
                     Text(
                         text = stringResource(R.string.artist),
@@ -72,9 +77,10 @@ fun StartPageScreen(
                 }
                 Button(
                     modifier = modifier
-                        .padding(dimensionResource(R.dimen.padding_medium))
+//                        .padding(dimensionResource(R.dimen.padding_medium))
+                        .padding(10.dp)
                         .width(180.dp),
-                    onClick = { /*TODO*/ }
+                    onClick = onCategoryButtonClicked
                 ) {
                     Text(
                         text = stringResource(R.string.category),
@@ -96,15 +102,8 @@ fun StartPageScreen(
         }
 
     }
-//}
-
-@Composable
-fun ThemeToggleButton(useDarkTheme: Boolean, onToggle: (Boolean) -> Unit) {
-    Button(onClick = {onToggle(!useDarkTheme) }) {
-        Text(text = if (useDarkTheme) stringResource(R.string.light_mode) else
-            stringResource(R.string.dark_mode))
-    }
 }
+
 
 @Composable
 fun ShoppingInfo(modifier: Modifier = Modifier) {
@@ -120,17 +119,19 @@ fun ShoppingInfo(modifier: Modifier = Modifier) {
         text = stringResource(R.string.chosen_photos, pictures),
         style = MaterialTheme.typography.bodyLarge,
         modifier = modifier
-            .padding(dimensionResource(R.dimen.padding_small))
+//            .padding(dimensionResource(R.dimen.padding_small))
+            .padding(5.dp)
     )
     Text(
         text = stringResource(R.string.total_price, totalprice),
         style = MaterialTheme.typography.bodyLarge,
         modifier = modifier
-            .padding(dimensionResource(R.dimen.padding_small))
+//            .padding(dimensionResource(R.dimen.padding_small))
+            .padding(5.dp)
     )
 
 
-    ShoppingCartItems()
+    ShoppingCartItems(onRemoveButtonClick = {})
     }
 }
 
@@ -140,13 +141,12 @@ fun ShoppingCartItems(
     title: String = "test",
     frameChoices: String = "tre",
     price: String = "3kr",
-//    onButtonClick: () -> Unit
+    onRemoveButtonClick: () -> Unit
 ) {
-//    Card(
-//        colors = CardDefaults.cardColors(
-//            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-//        )
+
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
             .fillMaxWidth()
@@ -197,16 +197,10 @@ fun ShoppingCartItems(
 @Preview
 @Composable
 fun MyArtShopPreview() {
-//    MyArtShopTheme(darkTheme = false) {
-    MyArtShopTheme {
-        StartPageScreen()
+    MyArtShopTheme(darkTheme = false) {
+        MyArtShopTheme {
+            StartPageScreen(onArtistButtonClicked = {}, onCategoryButtonClicked = {})
+        }
     }
 }
 
-//@Preview
-//@Composable
-//fun ArtShopDarkPreview() {
-//    MyArtShopTheme(darkTheme = true) {
-//        StartPageScreen()
-//    }
-//}

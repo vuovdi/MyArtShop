@@ -104,27 +104,14 @@ fun ArtShopApp(
                 .padding(innerPadding)
         ) {
             composable(route = ArtShopScreen.Start.name) {
-                StartPageScreen()
+                StartPageScreen(
+                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name)},
+                    onCategoryButtonClicked = {}
+                )
             }
-//
-//            composable(route = ArtShopScreen.PaintingViewer.name) {
-//                ImagesScreen(TODO()) {
-//
-//                }
-//            }
-//
-//            composable(route = ArtShopScreen.PaintingViewer.name) {
-//                SelectedPhotoScreen() {
-//                }
-//            }
-//
-//            composable(route = ArtShopScreen.Summary.name) {
-//                SummaryScreen() {
 
-//
-//                }
             }
         }
-        //val uiState by viewModel.uiState.collectAsState()
+
 
     }
