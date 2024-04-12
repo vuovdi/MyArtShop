@@ -21,8 +21,12 @@ data class Artist(
     @StringRes val birhtyearResId: Int
 )
 
-enum class Category {
-    Nature, Food, Sports, Misc, Architecture
+enum class Category(val iconRes: Int) {
+    Nature(R.drawable.ic_nature),
+    Food(R.drawable.ic_food),
+    Sports(R.drawable.ic_sports),
+    Misc(R.drawable.ic_misc),
+    Architecture(R.drawable.ic_architecture)
 }
 
 //Artists
