@@ -107,5 +107,4 @@ fun findMostExpensivePhotoPerCategory(photos: List<Photo>): Map<Category, Float>
 fun SelectCategoryPagePreview() {
     val yourPhotoList = photos
     CategoriesPage(categories = Category.entries, photos = yourPhotoList)
-
 }
