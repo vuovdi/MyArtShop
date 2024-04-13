@@ -2,11 +2,15 @@ package com.example.myartshop.ui.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.runtime.mutableStateOf
+
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,10 +33,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myartshop.R
 import com.example.myartshop.data.CartItem
@@ -108,22 +115,12 @@ fun StartPageScreen(
 
             ShoppingInfo(
                 viewModel = viewModel,
+                onPayButtonClicked,
                 shoppingCart = shoppingCart,
                 onRemoveItem = { cartItem -> viewModel.removeFromCart(cartItem) }
             )
 
-            Button(
-                modifier = modifier
-//                        .padding(dimensionResource(R.dimen.padding_medium))
-                    .padding(10.dp)
-                    .width(180.dp),
-                onClick = onPayButtonClicked
-            ) {
-                Text(
-                    text = "joojojoj",
-                    style = MaterialTheme.typography.labelLarge
-                )
-            }
+
         }
 
     }
@@ -133,25 +130,40 @@ fun StartPageScreen(
 @Composable
 fun ShoppingInfo(
     viewModel: OrderViewModel,
+    onPayButtonClicked: () -> Unit,
     shoppingCart: List<CartItem>,
     onRemoveItem: (CartItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val pictures = 0
-    val sumPictures by remember { mutableIntStateOf(pictures) }
-    val totalprice = 0
+    val sumPictures by remember { mutableIntStateOf(shoppingCart.size) }
+
+
 
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceAround
     ) {
+        Button(
+            modifier = modifier
+//                        .padding(dimensionResource(R.dimen.padding_medium))
+                .padding(10.dp)
+                .width(180.dp),
+            onClick = onPayButtonClicked
+        ) {
+            Text(
+                text = "Payment",
+                style = MaterialTheme.typography.labelLarge
+            )
+        }
         Text(
-            text = stringResource(R.string.chosen_photos, pictures),
+            text = stringResource(R.string.chosen_photos, sumPictures),
             style = MaterialTheme.typography.bodyLarge,
             modifier = modifier.padding(5.dp)
         )
         Text(
-            text = stringResource(R.string.total_price, totalprice),
+//            text = stringResource(R.string.total_price, viewModel.sumPrice()) Funksjonen er i viewModel, men funker ikke,
+            text = stringResource(R.string.total_price, 40),
             style = MaterialTheme.typography.bodyLarge,
             modifier = modifier.padding(5.dp)
         )
@@ -163,10 +175,10 @@ fun ShoppingInfo(
                     imageRes = cartItem.photo.imageResId,
                     title = cartItem.photo.title,
                     frameChoices = cartItem.frameType,
-                    price = cartItem.price.toString(),
-                    cartItem = cartItem,
-                    onRemoveButtonClick = { onRemoveItem(cartItem) } // Send med onRemoveItem-funksjonen
-                )
+                    price = cartItem.price,
+                    cartItem = cartItem
+                ) { onRemoveItem(cartItem) } // Send med onRemoveItem-funksjonen
+
             }
         }
     }
@@ -178,7 +190,7 @@ fun ShoppingCartItems(
     imageRes: Int,
     title: Int,
     frameChoices: String,
-    price: String,
+    price: Float,
     cartItem: CartItem,
     onRemoveButtonClick: (CartItem) -> Unit
 ) {
@@ -205,10 +217,22 @@ fun ShoppingCartItems(
             )
             Spacer(modifier = Modifier.width(16.dp))
 
-            Column(modifier = Modifier.weight(2f)) {
-                Text(text = stringResource(R.string.title) )
-                Text(text = price)
-                Text(text = frameChoices)
+            Column(modifier = Modifier
+                .weight(2f)
+                .fillMaxSize()) {
+                Text(
+                    text = stringResource(title),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = price.toString(),
+                    fontSize = 14.sp
+                )
+                Text(
+                    text = frameChoices,
+                    fontSize = 14.sp
+                )
             }
             Spacer(modifier = Modifier.width(16.dp))
             Button(
@@ -220,7 +244,7 @@ fun ShoppingCartItems(
             Spacer(modifier = Modifier.width(16.dp))
         }
 
-/** DETTE FUNKA IKKE :( SKJØNNER IKKE HVORFOR, MEN FLYTTA HARD KODEDE VERSJON LITT OPP (YAP SAP PAP)
+/** DETTE FUNKA IKKE  SKJØNNER IKKE HVORFOR,
  * */
 //            Column(
 //                modifier = Modifier.weight(2f)
@@ -247,4 +271,3 @@ fun MyArtShopPreview() {
         }
     }
 }
-

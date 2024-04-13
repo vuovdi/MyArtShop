@@ -39,7 +39,7 @@ object DataSource {
             frameType = "Wood", // Sett riktig rammetype her
             frameWidth = 2, // Sett riktig rammebredde her
             photoSize = "Medium", // Sett riktig fotosize her
-            price = 2.2 // Bruk en funksjon for å beregne prisen
+            price = 23.2f // Bruk en funksjon for å beregne prisen
         )
     }
 

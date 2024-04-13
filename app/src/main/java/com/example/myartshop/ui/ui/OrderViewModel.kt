@@ -58,7 +58,7 @@ class OrderViewModel: ViewModel() {
 //    }
 //
 
-    fun addToCart(frameType: String, frameWidth: Int, photoSize: String, price: Double) {
+    fun addToCart(frameType: String, frameWidth: Int, photoSize: String, price: Float) {
         val photo = selectedPhoto ?: return  // If selectedPhoto is null, return early
         val cartItem = CartItem(photo, frameType, frameWidth, photoSize, price)
         shoppingCart.value += cartItem
@@ -77,8 +77,22 @@ class OrderViewModel: ViewModel() {
             currentCartItems.removeAt(index)
             shoppingCart.value = currentCartItems
         }
+
     }
-}
+//    fun sumPrice(): Float {
+//        return shoppingCart.value.sumOf { it.price.toInt() }.toFloat()
+//    }
+
+//    fun sumPrice(): Float {
+//        var totalPrice = 0f
+//        for (cartItem in shoppingCart.value) {
+//            totalPrice += cartItem.price
+//        }
+//        return totalPrice
+//    }
+    }
+
+
 
 
 

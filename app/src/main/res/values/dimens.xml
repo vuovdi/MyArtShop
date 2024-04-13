@@ -4,4 +4,14 @@
     <dimen name="padding_medium">10.dp</dimen>
     <dimen name="padding_large">12.dp</dimen>
     <dimen name="image_size">64dp</dimen>
+
+    <!-- Text sizes -->
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">16.sp</dimen>
+    <dimen name="text_size_large">20.sp</dimen>
+    <dimen name="text_size_xlarge">24sp</dimen>
+
+    <!-- Font weights -->
+    <integer name="font_weight_normal">400</integer>
+    <integer name="font_weight_bold">700</integer>
 </resources>

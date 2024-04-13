@@ -23,7 +23,7 @@ data class Photo(
     @DrawableRes
     var imageResId: Int,
     var artist: Artist,
-    var category: com.example.myartshop.data.Category,
+    var category: Category,
     var price: Float
 )
 data class Artist(
@@ -36,7 +36,7 @@ data class CartItem(
     val frameType: String = "mediuem",
     val frameWidth: Int = 2,
     val photoSize: String = "small",
-    val price: Double = 2.2
+    val price: Float
 )
 data class OrderUiState(
     val listOfPhotos: List<Photo> = emptyList(),
