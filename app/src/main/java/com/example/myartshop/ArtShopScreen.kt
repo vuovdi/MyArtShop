@@ -133,7 +133,7 @@ fun ArtShopApp(
             startDestination = ArtShopScreen.Start.name,
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+//                .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
         ) {
 
@@ -142,8 +142,8 @@ fun ArtShopApp(
                 StartPageScreen(
                     viewModel = viewModel,
                     shoppingCart = viewModel.shoppingCart.value,
-//                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name) },
-                    onArtistButtonClicked = { navController.navigate(ArtShopScreen.ArtistList.name) },
+                    onArtistButtonClicked = {
+                        navController.navigate(ArtShopScreen.ArtistList.name) },
                     onCategoryButtonClicked = { navController.navigate(ArtShopScreen.CategoryList.name) }
                 )
             }
@@ -152,15 +152,26 @@ fun ArtShopApp(
                 val context = LocalContext.current
                 Log.d("ArtShopApp", "ArtistList composable called")
                 val artistList = listOf(artist1, artist2, artist3, artist4, artist5, artist6)
-                SelectArtistPage(artistList = artistList)
+                SelectArtistPage(
+                    artistList = artistList,
+                    onChosenArtistClicked = { selectedArtist ->
+                        viewModel.setSelectedArtist(selectedArtist)
+                        navController.navigate(ArtShopScreen.PaintingsList.name) })
+            }
+
+            composable(route = ArtShopScreen.PaintingsList.name) {
+                val selectedArtist = viewModel.selectedArtist
+                val paintingBySelectedArtist = photos.filter {it.artist == selectedArtist}
+                PhotoGridScreen(photos = paintingBySelectedArtist)
+
             }
 
             composable(route = ArtShopScreen.PaintingViewer.name) {
                 val yourPhotoList = photos
-                PhotoItem(photo = yourPhotoList[0])
+                PhotoGridScreen(photos = yourPhotoList)
             }
 
-            /** SUMMARY  /PAYMENT -- CAN SUCCESSFULLY BE NAVIGATED TO AND NAVIGATES TO POPUP-DIALOG -> HOMESCREEN */
+            /** SUMMARY/PAYMENT -- CAN SUCCESSFULLY BE NAVIGATED TO AND NAVIGATES TO POPUP-DIALOG -> HOMESCREEN */
             composable(route = ArtShopScreen.Summary.name) {
                 val paintingsList = DataSource.paintingsList
                 val cartItems = DataSource.cartItems
