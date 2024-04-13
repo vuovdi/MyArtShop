@@ -18,6 +18,7 @@ import androidx.compose.material.icons.rounded.AddReaction
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,24 +36,30 @@ import com.example.myartshop.data.Photo
 import com.example.myartshop.data.photos
 
 @Composable
-fun CategoriesPage(categories: List<Category>, photos: List<Photo>, modifier: Modifier = Modifier) {
+fun CategoriesPage(
+    categories: List<Category>,
+    photos: List<Photo>,
+    onChosenCategoryClicked: (Category) -> Unit,
+    modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
         items(categories) { category ->
-            CategoryCard(category = category, photos = photos.filter { it.category == category })
+            CategoryCard(category = category, photos = photos.filter { it.category == category }, onChosenCategoryClicked = onChosenCategoryClicked, modifier = modifier)
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryCard(category: Category, photos: List<Photo>) {
+fun CategoryCard(category: Category, photos: List<Photo>, onChosenCategoryClicked: (Category) -> Unit, modifier: Modifier) {
     val numberOfPhotosPerCategory = calculateNumberOfPhotosPerCategory(photos)
     val mostExpensivePhotoPerCategory = findMostExpensivePhotoPerCategory(photos)
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        onClick = { onChosenCategoryClicked(category) }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -108,5 +115,5 @@ fun findMostExpensivePhotoPerCategory(photos: List<Photo>): Map<Category, Float>
 @Composable
 fun SelectCategoryPagePreview() {
     val yourPhotoList = photos
-    CategoriesPage(categories = Category.entries, photos = yourPhotoList)
+//    CategoriesPage(categories = Category.entries, photos = yourPhotoList)
 }

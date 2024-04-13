@@ -159,11 +159,28 @@ fun ArtShopApp(
                         navController.navigate(ArtShopScreen.PaintingsList.name) })
             }
 
-            composable(route = ArtShopScreen.PaintingsList.name) {
-                val selectedArtist = viewModel.selectedArtist
-                val paintingBySelectedArtist = photos.filter {it.artist == selectedArtist}
-                PhotoGridScreen(photos = paintingBySelectedArtist)
+            composable(route = ArtShopScreen.CategoryList.name) {
+                val yourPhotoList = photos
+                CategoriesPage(
+                    categories = Category.entries, photos = yourPhotoList,
+                    onChosenCategoryClicked = { selectedCategory ->
+                        viewModel.setSelectedCategory(selectedCategory)
+                        navController.navigate(ArtShopScreen.PaintingsList.name) })
+            }
 
+            composable(route = "${ArtShopScreen.PaintingsList.name}/{type}") { backStackEntry ->
+                val type = backStackEntry.arguments?.getString("type")
+
+                val selectedArtist = viewModel.selectedArtist
+                val selectedCategory = viewModel.selectedCategory
+
+                val paintingsToShow = when (type) {
+                    "category" -> photos.filter { it.category == selectedCategory }
+                    "artist" -> photos.filter { it.artist == selectedArtist }
+                    else -> photos // Vis alle bilder hvis ingen type er spesifisert
+                }
+
+                PhotoGridScreen(photos = paintingsToShow)
             }
 
             composable(route = ArtShopScreen.PaintingViewer.name) {
