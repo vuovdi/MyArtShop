@@ -30,11 +30,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myartshop.R
+import com.example.myartshop.data.Photo
 import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 
 
 @Composable
-fun SelectedPhotoScreen(modifier: Modifier = Modifier) {
+fun SelectedPhotoScreen(photo: Photo?, modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -57,12 +58,14 @@ fun SelectedPhotoScreen(modifier: Modifier = Modifier) {
                 .padding(bottom = 16.dp)
         ) {
             Box(Modifier.fillMaxSize()) {
-                Image(
-                    painter = painterResource(id = R.drawable.koda),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
+                if (photo != null) {
+                    Image(
+                        painter = painterResource(id = photo.imageResId),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
         }
 
@@ -111,8 +114,8 @@ fun SelectedPhotoScreen(modifier: Modifier = Modifier) {
 @Composable
 fun SelectedImagePreview() {
     MyArtShopTheme(darkTheme = false){
-        SelectedPhotoScreen(
-            modifier = Modifier.fillMaxHeight()
-        )
+//        SelectedPhotoScreen(
+//            modifier = Modifier.fillMaxHeight()
+//        )
     }
 }

@@ -1,5 +1,6 @@
 package com.example.myartshop.ui
 
+import android.provider.ContactsContract.Contacts.Photo
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.myartshop.data.Artist
@@ -17,11 +18,11 @@ class OrderViewModel: ViewModel() {
     val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
     private val paintingsList = DataSource.paintingsList
-    val selectedPhoto = mutableStateOf<Painting?>(null)
     val selectedFrameOptions = mutableStateOf<Pair<String, Int>?>(null)
     val shoppingCart = mutableStateOf<List<CartItem>>(emptyList())
     private var _selectedArtist: Artist? = null
     private var _selectedCategory: Category? = null
+    private var _selectedPhoto: com.example.myartshop.data.Photo? = null
 
     val selectedArtist: Artist?
         get() = _selectedArtist
@@ -29,12 +30,19 @@ class OrderViewModel: ViewModel() {
     val selectedCategory: Category?
         get() = _selectedCategory
 
+    val selectedPhoto: com.example.myartshop.data.Photo?
+        get() = _selectedPhoto
+
     fun setSelectedArtist(artist: Artist) {
         _selectedArtist = artist
     }
 
     fun setSelectedCategory(category: Category) {
         _selectedCategory = category
+    }
+
+    fun setSelectedPhoto(photo: com.example.myartshop.data.Photo) {
+        _selectedPhoto = photo
     }
     init {
         updatePaintingsList(DataSource.paintingsList)
@@ -46,16 +54,16 @@ class OrderViewModel: ViewModel() {
         _uiState.value = _uiState.value.copy(paintingsList = paintingsList)
     }
 
-    fun selectPhoto(painting: Painting) {
-        selectedPhoto.value = painting
-    }
-
-    fun addToCart(frameType: String, frameWidth: Int, photoSize: String, price: Double) {
-        selectedPhoto.value?.let {painting ->
-            val cartItem = CartItem(painting, frameType, frameWidth, photoSize, price)
-            shoppingCart.value = shoppingCart.value + cartItem
-        }
-    }
+//    fun selectPhoto(painting: Painting) {
+//        selectedPhoto.value = painting
+//    }
+//
+//    fun addToCart(frameType: String, frameWidth: Int, photoSize: String, price: Double) {
+//        selectedPhoto.value?.let {painting ->
+//            val cartItem = CartItem(painting, frameType, frameWidth, photoSize, price)
+//            shoppingCart.value = shoppingCart.value + cartItem
+//        }
+//    }
 
 
     fun removeFromCart(cartItem: CartItem) {

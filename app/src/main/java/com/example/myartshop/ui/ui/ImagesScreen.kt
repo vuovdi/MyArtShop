@@ -1,6 +1,7 @@
 package com.example.myartshop.ui.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 
@@ -29,19 +30,19 @@ import com.example.myartshop.data.photos
 import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 
 @Composable
-fun PhotoGridScreen(photos: List<Photo>) {
+fun PhotoGridScreen(photos: List<Photo>, onPhotoClicked: (Photo) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(8.dp)
     ) {
         itemsIndexed(photos) { index, photo ->
-            PhotoItem(photo = photo)
+            PhotoItem(photo = photo, onPhotoClicked = onPhotoClicked)
         }
     }
 }
 
 @Composable
-fun PhotoItem(photo: Photo) {
+fun PhotoItem(photo: Photo, onPhotoClicked: (Photo) -> Unit) {
     Column(
         modifier = Modifier
             .padding(4.dp)
@@ -59,6 +60,7 @@ fun PhotoItem(photo: Photo) {
             modifier = Modifier
                 .aspectRatio(1f)
                 .fillMaxWidth()
+                .clickable { onPhotoClicked(photo) }
         )
     }
 }
@@ -68,7 +70,7 @@ fun PhotoItem(photo: Photo) {
 @Composable
 fun PhotoGridScreenPreview() {
     val yourPhotoList = photos
-    PhotoGridScreen(photos = yourPhotoList)
+//    PhotoGridScreen(photos = yourPhotoList)
 //    PhotoItem(photo = yourPhotoList[0])
 }
 
