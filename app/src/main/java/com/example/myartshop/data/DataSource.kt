@@ -50,7 +50,7 @@ object DataSource {
         R.string.plastic
 
     )
-    val photo_size_size = listOf(
+    val photo_size = listOf(
         R.string.small,
         R.string.medium,
         R.string.large
