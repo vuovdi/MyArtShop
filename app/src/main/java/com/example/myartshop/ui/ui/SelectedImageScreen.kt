@@ -44,7 +44,7 @@ fun SelectedPhotoScreen(photo: Photo?, onAddToCartClicked: (Photo?) -> Unit) {
             .padding(16.dp)
     ) {
         Text(
-            text = "Photo title",
+            text = stringResource(photo!!.title),
             style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold),
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -58,14 +58,14 @@ fun SelectedPhotoScreen(photo: Photo?, onAddToCartClicked: (Photo?) -> Unit) {
                 .padding(bottom = 16.dp)
         ) {
             Box(Modifier.fillMaxSize()) {
-                if (photo != null) {
-                    Image(
-                        painter = painterResource(id = photo.imageResId),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
+
+                Image(
+                    painter = painterResource(id = photo.imageResId),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
                     )
-                }
+
             }
         }
 

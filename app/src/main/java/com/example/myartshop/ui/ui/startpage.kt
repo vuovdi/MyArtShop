@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myartshop.R
 import com.example.myartshop.data.CartItem
+import com.example.myartshop.data.DataSource
 //import com.example.myartshop.data.DataSource.cartItemsExample
 import com.example.myartshop.ui.OrderViewModel
 import com.example.myartshop.ui.ui.theme.MyArtShopTheme
@@ -160,7 +161,7 @@ fun ShoppingInfo(
             items(shoppingCart) { cartItem ->
                 ShoppingCartItems(
                     imageRes = cartItem.photo.imageResId,
-                    title = cartItem.photo.title.toString(),
+                    title = cartItem.photo.title,
                     frameChoices = cartItem.frameType,
                     price = cartItem.price.toString(),
                     cartItem = cartItem,
@@ -174,10 +175,10 @@ fun ShoppingInfo(
 
 @Composable
 fun ShoppingCartItems(
-    imageRes: Int = R.drawable.image1,
-    title: String = "test",
-    frameChoices: String = "tre",
-    price: String = "3kr",
+    imageRes: Int,
+    title: Int,
+    frameChoices: String,
+    price: String,
     cartItem: CartItem,
     onRemoveButtonClick: (CartItem) -> Unit
 ) {
@@ -196,7 +197,7 @@ fun ShoppingCartItems(
         ){
             Image(
                 painter = painterResource(imageRes),
-                contentDescription = title,
+                contentDescription = "oki",
                 modifier = Modifier
                     .size(120.dp)
                     .clip(shape = RoundedCornerShape(8.dp)),
@@ -205,7 +206,7 @@ fun ShoppingCartItems(
             Spacer(modifier = Modifier.width(16.dp))
 
             Column(modifier = Modifier.weight(2f)) {
-                Text(text = title)
+                Text(text = stringResource(R.string.title) )
                 Text(text = price)
                 Text(text = frameChoices)
             }
@@ -235,21 +236,15 @@ fun ShoppingCartItems(
 @Preview
 @Composable
 fun MyArtShopPreview() {
-//    val viewModel: OrderViewModel = viewModel()
-//
-//    MyArtShopTheme(darkTheme = false) {
-//        MyArtShopTheme {
-//            StartPageScreen(
-////                viewModel = viewModel,
-////                shoppingCart = cartItemsExample,
-////                onArtistButtonClicked = {}, onCategoryButtonClicked = {}, onPayButtonClicked = {})
-////        }
-////        MyArtShopTheme {
-////            StartPageScreen(
-////                viewModel = viewModel,
-////                shoppingCart = viewModel.shoppingCart.value,
-////                onArtistButtonClicked = {}, onCategoryButtonClicked = {})
-////        }
-//    }
+    val viewModel: OrderViewModel = viewModel()
+
+    MyArtShopTheme(darkTheme = false) {
+        MyArtShopTheme {
+            StartPageScreen(
+                viewModel = viewModel,
+                shoppingCart = DataSource.cartItems,
+                onArtistButtonClicked = {}, onCategoryButtonClicked = {}, onPayButtonClicked = {})
+        }
+    }
 }
 
