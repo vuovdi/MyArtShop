@@ -1,27 +1,51 @@
 package com.example.myartshop.data
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import com.example.myartshop.R
 
 /**
  * Data class that represents the current UI state
  */
-data class Painting(
-    @DrawableRes val imageResId: Int,
-    val artist: String,
-    val category: String,
-    val name: String,
+//data class Photo(
+//    @DrawableRes val imageResId: Int,
+//    val artist: String,
+//    val category: String,
+//    val name: String,
+//
+//)
+enum class Category(val iconRes: Int) {
+    Nature(R.drawable.ic_nature),
+    Food(R.drawable.ic_food),
+    Sports(R.drawable.ic_sports),
+    Misc(R.drawable.ic_misc),
+    Architecture(R.drawable.ic_architecture)
+}
 
+data class Photo(
+    /** Unik ID til bildet **/
+    val id: Long,
+    @StringRes val title: Int,
+    @DrawableRes
+    var imageResId: Int,
+    var artist: Artist,
+    var category: com.example.myartshop.data.Category,
+    var price: Float
+)
+data class Artist(
+    @StringRes val nameResId: Int,
+    @StringRes val countryResId: Int,
 )
 
 data class CartItem(
-    val painting: Painting,
+    val photo: Photo,
     val frameType: String,
     val frameWidth: Int,
     val photoSize: String,
     val price: Double
 )
 data class OrderUiState(
-    val paintingsList: List<Painting> = emptyList(),
+    val listOfPhotos: List<Photo> = emptyList(),
     val cartItems: List<CartItem> = emptyList(),
     val price: String = ""
 )

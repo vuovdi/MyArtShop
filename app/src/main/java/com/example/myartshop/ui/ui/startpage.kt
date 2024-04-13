@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myartshop.R
 import com.example.myartshop.data.CartItem
-import com.example.myartshop.data.cartItemsExample
+//import com.example.myartshop.data.DataSource.cartItemsExample
 import com.example.myartshop.ui.OrderViewModel
 import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 
@@ -110,7 +110,6 @@ fun StartPageScreen(
 //                shoppingCart = shoppingCart,
 //                onRemoveItem = { cartItem -> viewModel.removeFromCart(cartItem) }
 //            )
-//            ThemeToggleButton(useDarkTheme = darkTheme, onToggle = setDarkTheme)
 
             Button(
                 modifier = modifier
@@ -160,8 +159,8 @@ fun ShoppingInfo(
         {
             items(shoppingCart) { cartItem ->
                 ShoppingCartItems(
-                    imageRes = cartItem.painting.imageResId,
-                    title = cartItem.painting.name,
+                    imageRes = cartItem.photo.imageResId,
+                    title = cartItem.photo.title.toString(),
                     frameChoices = cartItem.frameType,
                     price = cartItem.price.toString(),
                     cartItem = cartItem,
@@ -236,21 +235,21 @@ fun ShoppingCartItems(
 @Preview
 @Composable
 fun MyArtShopPreview() {
-    val viewModel: OrderViewModel = viewModel()
-
-    MyArtShopTheme(darkTheme = false) {
-        MyArtShopTheme {
-            StartPageScreen(
-                viewModel = viewModel,
-                shoppingCart = cartItemsExample,
-                onArtistButtonClicked = {}, onCategoryButtonClicked = {}, onPayButtonClicked = {})
-        }
+//    val viewModel: OrderViewModel = viewModel()
+//
+//    MyArtShopTheme(darkTheme = false) {
 //        MyArtShopTheme {
 //            StartPageScreen(
-//                viewModel = viewModel,
-//                shoppingCart = viewModel.shoppingCart.value,
-//                onArtistButtonClicked = {}, onCategoryButtonClicked = {})
-//        }
-    }
+////                viewModel = viewModel,
+////                shoppingCart = cartItemsExample,
+////                onArtistButtonClicked = {}, onCategoryButtonClicked = {}, onPayButtonClicked = {})
+////        }
+////        MyArtShopTheme {
+////            StartPageScreen(
+////                viewModel = viewModel,
+////                shoppingCart = viewModel.shoppingCart.value,
+////                onArtistButtonClicked = {}, onCategoryButtonClicked = {})
+////        }
+//    }
 }
 

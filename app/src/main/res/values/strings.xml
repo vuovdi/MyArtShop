@@ -21,9 +21,9 @@
     <string name="artists">Artists</string>
     <string name="category">Category</string>
     <string name="categories">Categories</string>
-    <string name="Artist_paintings">Paintings</string>
-    <string name="Category_paintings">Paintings ba</string>
-    <string name="chosen_painting">Chosen Painting</string>
+    <string name="Artist_photos">Photos</string>
+    <string name="Category_photos">Photos ba</string>
+    <string name="chosen_photo">Chosen Photo</string>
     <string name="shopping_cart">My shopping cart</string>
     <string name="chosen_photos">Photos in cart: %d</string>
     <string name="total_price">Total price inc. mva: %d</string>

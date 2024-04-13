@@ -36,10 +36,10 @@ fun SummaryScreen(
         price += cartItem.price
         // Gjør noe med prisen, for eksempel vis den i loggen eller i grensesnittet
     }
-    var paintingNames = ""
+    var photoNames = ""
     for (cartItem in cartItems) {
-        val paintingName = cartItem.painting.name
-        paintingNames += "$paintingName "
+        val photoName = cartItem.photo.title
+        photoNames += "$photoName "
     }
     Column(
         modifier = modifier
@@ -52,7 +52,7 @@ fun SummaryScreen(
         )
         Divider()
         Spacer(modifier = Modifier.height(8.dp))
-        SummaryItem("Picture:", paintingNames, modifier)
+        SummaryItem("Picture:", photoNames, modifier)
         // TODO: Implement dynamic frame quality
         SummaryItem("Frame quality:", "Good", modifier)
         Spacer(modifier = Modifier.height(16.dp))
@@ -111,14 +111,14 @@ fun SummaryItem(label: String, value: String, modifier: Modifier) {
 @Composable
 fun SummaryScreenPreview() {
     val viewModel: OrderViewModel = viewModel()
-    val paintingsList = DataSource.paintingsList
+    val listOfPhotos = DataSource.listOfPhotos
     val cartItems = DataSource.cartItems
 
     val modifier = Modifier // Example modifier
 
     MyArtShopTheme {
         SummaryScreen(
-            orderUiState = OrderUiState(paintingsList = paintingsList, cartItems = cartItems),
+            orderUiState = OrderUiState(listOfPhotos = listOfPhotos, cartItems = cartItems),
             viewModel = viewModel,
             onPay  = {},
             modifier = modifier
@@ -126,8 +126,3 @@ fun SummaryScreenPreview() {
     }
 }
 
-//data class OrderUiState(
-//    val paintingsList: List<Painting> = emptyList(),
-//    val cartItems: List<CartItem> = emptyList(),
-//    val price: String = ""
-//)

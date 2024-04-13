@@ -1,6 +1,5 @@
 package com.example.myartshop.ui
 
-import android.provider.ContactsContract.Contacts.Photo
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.myartshop.data.Artist
@@ -8,7 +7,7 @@ import com.example.myartshop.data.CartItem
 import com.example.myartshop.data.Category
 import com.example.myartshop.data.DataSource
 import com.example.myartshop.data.OrderUiState
-import com.example.myartshop.data.Painting
+import com.example.myartshop.data.Photo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,12 +16,12 @@ class OrderViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(OrderUiState())
     val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
-    private val paintingsList = DataSource.paintingsList
+    private val listOfPhotos = DataSource.listOfPhotos
     val selectedFrameOptions = mutableStateOf<Pair<String, Int>?>(null)
     val shoppingCart = mutableStateOf<List<CartItem>>(emptyList())
     private var _selectedArtist: Artist? = null
     private var _selectedCategory: Category? = null
-    private var _selectedPhoto: com.example.myartshop.data.Photo? = null
+    private var _selectedPhoto: Photo? = null
 
     val selectedArtist: Artist?
         get() = _selectedArtist
@@ -30,7 +29,7 @@ class OrderViewModel: ViewModel() {
     val selectedCategory: Category?
         get() = _selectedCategory
 
-    val selectedPhoto: com.example.myartshop.data.Photo?
+    val selectedPhoto: Photo?
         get() = _selectedPhoto
 
     fun setSelectedArtist(artist: Artist) {
@@ -45,22 +44,22 @@ class OrderViewModel: ViewModel() {
         _selectedPhoto = photo
     }
     init {
-        updatePaintingsList(DataSource.paintingsList)
+        updatePhotosList(DataSource.listOfPhotos)
     }
 
 
 
-    private fun updatePaintingsList(paintingsList: List<Painting>) {
-        _uiState.value = _uiState.value.copy(paintingsList = paintingsList)
+    private fun updatePhotosList(listOfPhotos: List<com.example.myartshop.data.Photo>) {
+        _uiState.value = _uiState.value.copy(listOfPhotos = listOfPhotos)
     }
 
-//    fun selectPhoto(painting: Painting) {
-//        selectedPhoto.value = painting
+//    fun selectPhoto(photo: Photo) {
+//        selectedPhoto.value = photo
 //    }
 //
 //    fun addToCart(frameType: String, frameWidth: Int, photoSize: String, price: Double) {
-//        selectedPhoto.value?.let {painting ->
-//            val cartItem = CartItem(painting, frameType, frameWidth, photoSize, price)
+//        selectedPhoto.value?.let {photo ->
+//            val cartItem = CartItem(photo, frameType, frameWidth, photoSize, price)
 //            shoppingCart.value = shoppingCart.value + cartItem
 //        }
 //    }

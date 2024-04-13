@@ -40,14 +40,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.myartshop.data.Category
 import com.example.myartshop.data.DataSource
+import com.example.myartshop.data.DataSource.listOfPhotos
+import com.example.myartshop.data.DataSource.listOfartists
 import com.example.myartshop.data.OrderUiState
-import com.example.myartshop.data.artist1
-import com.example.myartshop.data.artist2
-import com.example.myartshop.data.artist3
-import com.example.myartshop.data.artist4
-import com.example.myartshop.data.artist5
-import com.example.myartshop.data.artist6
-import com.example.myartshop.data.photos
+import com.example.myartshop.data.Photo
 import com.example.myartshop.ui.OrderViewModel
 import com.example.myartshop.ui.ui.CategoriesPage
 import com.example.myartshop.ui.ui.PhotoGridScreen
@@ -60,9 +56,9 @@ enum class ArtShopScreen(@StringRes val title:Int) {
     Start(title = R.string.main_page),
     ArtistList(title = R.string.artists),
     CategoryList(title = R.string.categories),
-    ArtistPaintingsList(title = R.string.Artist_paintings), // bare ressursreferanse her
-    CategoryPaintingsList(title = R.string.Category_paintings),
-    PaintingViewer(title = R.string.chosen_painting),
+    ArtistPhotosList(title = R.string.Artist_photos), // bare ressursreferanse her
+    CategoryPhotosList(title = R.string.Category_photos),
+    PhotoViewer(title = R.string.chosen_photo),
     Summary(title = R.string.payment)
 }
 @OptIn(ExperimentalMaterial3Api::class)
@@ -138,54 +134,54 @@ fun ArtShopApp(
 
             /** ARTIST LIST */
             composable(route = ArtShopScreen.ArtistList.name) {
-                val artistList = listOf(artist1, artist2, artist3, artist4, artist5, artist6)
+
                 SelectArtistPage(
-                    artistList = artistList,
+                    artistList = listOfartists,
                     onChosenArtistClicked = { selectedArtist ->
                         viewModel.setSelectedArtist(selectedArtist)
-                        navController.navigate(ArtShopScreen.ArtistPaintingsList.name) })
+                        navController.navigate(ArtShopScreen.ArtistPhotosList.name) })
             }
 
             composable(route = ArtShopScreen.CategoryList.name) {
-                val yourPhotoList = photos
+                val yourPhotoList = listOfPhotos
                 CategoriesPage(
                     categories = Category.entries,
                     photos = yourPhotoList,
                     onChosenCategoryClicked = { selectedCategory ->
                         viewModel.setSelectedCategory(selectedCategory)
-                        navController.navigate(ArtShopScreen.CategoryPaintingsList.name) })
+                        navController.navigate(ArtShopScreen.CategoryPhotosList.name) })
             }
 
-            composable(route = ArtShopScreen.ArtistPaintingsList.name) {
+            composable(route = ArtShopScreen.ArtistPhotosList.name) {
                 val selectedArtist = viewModel.selectedArtist
-                val paintingBySelectedArtist = photos.filter {it.artist == selectedArtist}
+                val photoBySelectedArtist = listOfPhotos.filter {it.artist == selectedArtist}
                 PhotoGridScreen(
-                    photos = paintingBySelectedArtist,
-                    onPhotoClicked = { selectedPhoto ->
+                    photos = photoBySelectedArtist,
+                    onPhotoClicked = { selectedPhoto: Photo ->
                         viewModel.setSelectedPhoto(selectedPhoto)
-                        navController.navigate(ArtShopScreen.PaintingViewer.name)
+                        navController.navigate(ArtShopScreen.PhotoViewer.name)
                     })
             }
 
-            composable(route = ArtShopScreen.CategoryPaintingsList.name) {
+            composable(route = ArtShopScreen.CategoryPhotosList.name) {
                 val selectedCategory = viewModel.selectedCategory
-                val paintingBySelectedArtist = photos.filter {it.category == selectedCategory}
+                val photoBySelectedArtist = listOfPhotos.filter {it.category == selectedCategory}
                 PhotoGridScreen(
-                    photos = paintingBySelectedArtist,
-                    onPhotoClicked = { selectedPhoto ->
+                    photos = photoBySelectedArtist,
+                    onPhotoClicked = { selectedPhoto: Photo ->
                         viewModel.setSelectedPhoto(selectedPhoto)
-                        navController.navigate(ArtShopScreen.PaintingViewer.name)
+                        navController.navigate(ArtShopScreen.PhotoViewer.name)
                     })
             }
 
-            composable(route = ArtShopScreen.PaintingViewer.name) {
+            composable(route = ArtShopScreen.PhotoViewer.name) {
                 val selectedPhoto = viewModel.selectedPhoto
                 SelectedPhotoScreen(photo = selectedPhoto)
             }
 
             /** SUMMARY/PAYMENT -- CAN SUCCESSFULLY BE NAVIGATED TO AND NAVIGATES TO POPUP-DIALOG -> HOMESCREEN */
             composable(route = ArtShopScreen.Summary.name) {
-                val paintingsList = DataSource.paintingsList
+                val photosList = DataSource.listOfPhotos
                 val cartItems = DataSource.cartItems
 
                 val modifier = Modifier // Example modifier
@@ -198,7 +194,7 @@ fun ArtShopApp(
                 } else {
                     SummaryScreen(
                         orderUiState = OrderUiState(
-                            paintingsList = paintingsList,
+                            listOfPhotos = listOfPhotos,
                             cartItems = cartItems
                         ),
                         viewModel = viewModel,
