@@ -129,7 +129,8 @@ fun ArtShopApp(
                     shoppingCart = viewModel.shoppingCart.value,
                     onArtistButtonClicked = {
                         navController.navigate(ArtShopScreen.ArtistList.name) },
-                    onCategoryButtonClicked = { navController.navigate(ArtShopScreen.CategoryList.name) }
+                    onCategoryButtonClicked = { navController.navigate(ArtShopScreen.CategoryList.name)},
+                    onPayButtonClicked = { navController.navigate(ArtShopScreen.Summary.name)}
                 )
             }
 

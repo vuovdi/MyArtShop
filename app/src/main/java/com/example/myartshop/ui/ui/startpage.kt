@@ -7,11 +7,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -28,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myartshop.R
 import com.example.myartshop.data.CartItem
+import com.example.myartshop.data.cartItemsExample
 import com.example.myartshop.ui.OrderViewModel
 import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 
@@ -46,6 +47,7 @@ fun StartPageScreen(
     /**0 : artist, 1 : category + onClick*/
     onArtistButtonClicked: () -> Unit,
     onCategoryButtonClicked: () -> Unit,
+    onPayButtonClicked: () -> Unit,
     modifier: Modifier = Modifier) {
     val isDarkTheme = isSystemInDarkTheme()
     val (darkTheme, setDarkTheme) = remember { mutableStateOf(isDarkTheme) }
@@ -102,12 +104,26 @@ fun StartPageScreen(
                     style = MaterialTheme.typography.displayMedium
                 )
             }
-            ShoppingInfo(
-                viewModel = viewModel,
-                shoppingCart = shoppingCart,
-                onRemoveItem = { cartItem -> viewModel.removeFromCart(cartItem) }
-            )
+
+//            ShoppingInfo(
+//                viewModel = viewModel,
+//                shoppingCart = shoppingCart,
+//                onRemoveItem = { cartItem -> viewModel.removeFromCart(cartItem) }
+//            )
 //            ThemeToggleButton(useDarkTheme = darkTheme, onToggle = setDarkTheme)
+
+            Button(
+                modifier = modifier
+//                        .padding(dimensionResource(R.dimen.padding_medium))
+                    .padding(10.dp)
+                    .width(180.dp),
+                onClick = onPayButtonClicked
+            ) {
+                Text(
+                    text = "joojojoj",
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
         }
 
     }
@@ -140,11 +156,18 @@ fun ShoppingInfo(
             modifier = modifier.padding(5.dp)
         )
 
-        shoppingCart.forEach { cartItem ->
-            ShoppingCartItems(
-                cartItem = cartItem,
-                onRemoveButtonClick = { onRemoveItem(cartItem) } // Send med onRemoveItem-funksjonen
-            )
+        LazyColumn(modifier = modifier.fillMaxWidth())
+        {
+            items(shoppingCart) { cartItem ->
+                ShoppingCartItems(
+                    imageRes = cartItem.painting.imageResId,
+                    title = cartItem.painting.name,
+                    frameChoices = cartItem.frameType,
+                    price = cartItem.price.toString(),
+                    cartItem = cartItem,
+                    onRemoveButtonClick = { onRemoveItem(cartItem) } // Send med onRemoveItem-funksjonen
+                )
+            }
         }
     }
 }
@@ -152,7 +175,7 @@ fun ShoppingInfo(
 
 @Composable
 fun ShoppingCartItems(
-//    imageRes: Int,
+    imageRes: Int = R.drawable.image1,
     title: String = "test",
     frameChoices: String = "tre",
     price: String = "3kr",
@@ -169,12 +192,12 @@ fun ShoppingCartItems(
             .padding(16.dp)
     ) {
         Row (
-            modifier = Modifier.fillMaxSize(),
+//            modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically
         ){
             Image(
-                painter = painterResource(R.drawable.image1),
-                contentDescription = "yapp yapp yapp",
+                painter = painterResource(imageRes),
+                contentDescription = title,
                 modifier = Modifier
                     .size(120.dp)
                     .clip(shape = RoundedCornerShape(8.dp)),
@@ -183,9 +206,9 @@ fun ShoppingCartItems(
             Spacer(modifier = Modifier.width(16.dp))
 
             Column(modifier = Modifier.weight(2f)) {
-                Text(text = "yap")
-                Text(text = "sap")
-                Text(text = "dap")
+                Text(text = title)
+                Text(text = price)
+                Text(text = frameChoices)
             }
             Spacer(modifier = Modifier.width(16.dp))
             Button(
@@ -219,9 +242,15 @@ fun MyArtShopPreview() {
         MyArtShopTheme {
             StartPageScreen(
                 viewModel = viewModel,
-                shoppingCart = viewModel.shoppingCart.value,
-                onArtistButtonClicked = {}, onCategoryButtonClicked = {})
+                shoppingCart = cartItemsExample,
+                onArtistButtonClicked = {}, onCategoryButtonClicked = {}, onPayButtonClicked = {})
         }
+//        MyArtShopTheme {
+//            StartPageScreen(
+//                viewModel = viewModel,
+//                shoppingCart = viewModel.shoppingCart.value,
+//                onArtistButtonClicked = {}, onCategoryButtonClicked = {})
+//        }
     }
 }
 

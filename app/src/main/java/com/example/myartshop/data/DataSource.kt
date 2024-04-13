@@ -13,7 +13,7 @@ object DataSource {
     // only example
     val cartItems = paintingsList.map { painting ->
         CartItem(
-            painting = painting,
+            painting,
             frameType = "Wood", // Sett riktig rammetype her
             frameWidth = 2, // Sett riktig rammebredde her
             photoSize = "Medium", // Sett riktig fotosize her

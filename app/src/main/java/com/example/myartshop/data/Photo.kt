@@ -56,3 +56,41 @@ val photos = listOf(
     Photo(15, R.string.title_15, R.drawable.lemon_drink, artist6, Category.Food, 75.0f),
     Photo(16, R.string.title_16, R.drawable.lemon_tree, artist6, Category.Food, 70.0f)
 )
+
+val cartItemsExample = listOf(
+    CartItem(
+        painting = Painting(R.drawable.image1, "Sunflower", "Van Gogh", "1888"),
+        frameType = "Wooden",
+        frameWidth = 2,
+        photoSize = "Large",
+        price = 150.0
+    ),
+    CartItem(
+        painting = Painting(R.drawable.android_superhero1, "Starry Night", "Van Gogh", "1889"),
+        frameType = "Metal",
+        frameWidth = 1,
+        photoSize = "Medium",
+        price = 200.0
+    ),
+    CartItem(
+        painting = Painting(R.drawable.image9, "The Last Supper", "Leonardo da Vinci", "1498"),
+        frameType = "Plastic",
+        frameWidth = 3,
+        photoSize = "Small",
+        price = 300.0
+    ),
+    CartItem(
+        painting = Painting(R.drawable.image2, "Mona Lisa", "Leonardo da Vinci", "1503"),
+        frameType = "Wooden",
+        frameWidth = 2,
+        photoSize = "Large",
+        price = 500.0
+    ),
+    CartItem(
+        painting = Painting(R.drawable.leroy, "Girl with a Pearl Earring", "Johannes Vermeer", "1665"),
+        frameType = "Metal",
+        frameWidth = 1,
+        photoSize = "Medium",
+        price = 250.0
+    )
+)
