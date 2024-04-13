@@ -76,7 +76,8 @@ enum class ArtShopScreen(@StringRes val title:Int) {
     Start(title = R.string.main_page),
     ArtistList(title = R.string.artist),
     CategoryList(title = R.string.category),
-    PaintingsList(title = R.string.paintings),
+    ArtistPaintingsList(title = R.string.paintings),
+    CategoryPaintingsList(title = R.string.paintings),
     PaintingViewer(title = R.string.chosen_painting),
     Summary(title = R.string.payment)
 }
@@ -149,38 +150,34 @@ fun ArtShopApp(
             }
             /** ARTIST LIST */
             composable(route = ArtShopScreen.ArtistList.name) {
-                val context = LocalContext.current
-                Log.d("ArtShopApp", "ArtistList composable called")
                 val artistList = listOf(artist1, artist2, artist3, artist4, artist5, artist6)
                 SelectArtistPage(
                     artistList = artistList,
                     onChosenArtistClicked = { selectedArtist ->
                         viewModel.setSelectedArtist(selectedArtist)
-                        navController.navigate(ArtShopScreen.PaintingsList.name) })
+                        navController.navigate(ArtShopScreen.ArtistPaintingsList.name) })
             }
 
             composable(route = ArtShopScreen.CategoryList.name) {
                 val yourPhotoList = photos
                 CategoriesPage(
-                    categories = Category.entries, photos = yourPhotoList,
+                    categories = Category.entries,
+                    photos = yourPhotoList,
                     onChosenCategoryClicked = { selectedCategory ->
                         viewModel.setSelectedCategory(selectedCategory)
-                        navController.navigate(ArtShopScreen.PaintingsList.name) })
+                        navController.navigate(ArtShopScreen.CategoryPaintingsList.name) })
             }
 
-            composable(route = "${ArtShopScreen.PaintingsList.name}/{type}") { backStackEntry ->
-                val type = backStackEntry.arguments?.getString("type")
-
+            composable(route = ArtShopScreen.ArtistPaintingsList.name) {
                 val selectedArtist = viewModel.selectedArtist
+                val paintingBySelectedArtist = photos.filter {it.artist == selectedArtist}
+                PhotoGridScreen(photos = paintingBySelectedArtist)
+            }
+
+            composable(route = ArtShopScreen.CategoryPaintingsList.name) {
                 val selectedCategory = viewModel.selectedCategory
-
-                val paintingsToShow = when (type) {
-                    "category" -> photos.filter { it.category == selectedCategory }
-                    "artist" -> photos.filter { it.artist == selectedArtist }
-                    else -> photos // Vis alle bilder hvis ingen type er spesifisert
-                }
-
-                PhotoGridScreen(photos = paintingsToShow)
+                val paintingBySelectedArtist = photos.filter {it.category == selectedCategory}
+                PhotoGridScreen(photos = paintingBySelectedArtist)
             }
 
             composable(route = ArtShopScreen.PaintingViewer.name) {
