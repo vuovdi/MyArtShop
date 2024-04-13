@@ -58,22 +58,23 @@ import com.example.myartshop.ui.ui.SummaryScreen
 
 enum class ArtShopScreen(@StringRes val title:Int) {
     Start(title = R.string.main_page),
-    ArtistList(title = R.string.artist),
-    CategoryList(title = R.string.category),
-    ArtistPaintingsList(title = R.string.paintings),
-    CategoryPaintingsList(title = R.string.paintings),
+    ArtistList(title = R.string.artists),
+    CategoryList(title = R.string.categories),
+    ArtistPaintingsList(title = R.string.Artist_paintings), // bare ressursreferanse her
+    CategoryPaintingsList(title = R.string.Category_paintings),
     PaintingViewer(title = R.string.chosen_painting),
     Summary(title = R.string.payment)
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtshopAppBar(
+    currentScreen: ArtShopScreen,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.app_name)) },
+        title = { Text(stringResource(currentScreen.title)) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
@@ -105,8 +106,9 @@ fun ArtShopApp(
     Scaffold(
         topBar = {
             ArtshopAppBar(
-                canNavigateBack = false,
-                navigateUp = { /* TODO: implement back navigation */ }
+                currentScreen = currentScreen,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() }
             )
         }
     )

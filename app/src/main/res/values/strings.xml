@@ -13,19 +13,24 @@
     //Screen
     <string name="back_button">Back</string>
 
-    // Startpage strings
+    // Start page strings
 
-    <string name="main_page">Main Page</string>
+    <string name="main_page">Home</string>
     <string name="choose_category">See photos based on</string>
     <string name="artist">Artist</string>
+    <string name="artists">Artists</string>
     <string name="category">Category</string>
-    <string name="paintings">Paintings</string>
+    <string name="categories">Categories</string>
+    <string name="Artist_paintings">Paintings</string>
+    <string name="Category_paintings">Paintings ba</string>
     <string name="chosen_painting">Chosen Painting</string>
     <string name="shopping_cart">My shopping cart</string>
     <string name="chosen_photos">Photos in cart: %d</string>
     <string name="total_price">Total price inc. mva: %d</string>
     <string name="subtotal_price">Subtotal %s</string>
     <string name="payment">Payment</string>
+<!--    <string name="title">Title: %d</string>-->
+
 
     // Image titles
     <string name="title_1">title 1</string>
