@@ -57,12 +57,12 @@ class OrderViewModel: ViewModel() {
 //        selectedPhoto.value = photo
 //    }
 //
-//    fun addToCart(frameType: String, frameWidth: Int, photoSize: String, price: Double) {
-//        selectedPhoto.value?.let {photo ->
-//            val cartItem = CartItem(photo, frameType, frameWidth, photoSize, price)
-//            shoppingCart.value = shoppingCart.value + cartItem
-//        }
-//    }
+
+    fun addToCart(frameType: String, frameWidth: Int, photoSize: String, price: Double) {
+        val photo = selectedPhoto ?: return  // If selectedPhoto is null, return early
+        val cartItem = CartItem(photo, frameType, frameWidth, photoSize, price)
+        shoppingCart.value += cartItem
+    }
 
 
     fun removeFromCart(cartItem: CartItem) {

@@ -176,7 +176,15 @@ fun ArtShopApp(
 
             composable(route = ArtShopScreen.PhotoViewer.name) {
                 val selectedPhoto = viewModel.selectedPhoto
-                SelectedPhotoScreen(photo = selectedPhoto)
+                SelectedPhotoScreen(
+                    photo = selectedPhoto,
+                    onAddToCartClicked = {
+                        viewModel.addToCart(
+                            frameType = "mediuem",
+                            frameWidth = 2,
+                            photoSize = "small",
+                            price = 2.2)
+                    })
             }
 
             /** SUMMARY/PAYMENT -- CAN SUCCESSFULLY BE NAVIGATED TO AND NAVIGATES TO POPUP-DIALOG -> HOMESCREEN */

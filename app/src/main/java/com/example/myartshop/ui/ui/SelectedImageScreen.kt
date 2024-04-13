@@ -29,12 +29,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myartshop.R
+import com.example.myartshop.data.DataSource.listOfPhotos
 import com.example.myartshop.data.Photo
 import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 
 
 @Composable
-fun SelectedPhotoScreen(photo: Photo?) {
+fun SelectedPhotoScreen(photo: Photo?, onAddToCartClicked: (Photo?) -> Unit) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -86,7 +87,7 @@ fun SelectedPhotoScreen(photo: Photo?) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = { /* TODO */ },
+                    onClick = { onAddToCartClicked(photo) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
@@ -113,8 +114,8 @@ fun SelectedPhotoScreen(photo: Photo?) {
 @Composable
 fun SelectedImagePreview() {
     MyArtShopTheme(darkTheme = false){
-//        SelectedPhotoScreen(
-//            modifier = Modifier.fillMaxHeight()
-//        )
+        SelectedPhotoScreen(
+            listOfPhotos[0], onAddToCartClicked = {}
+        )
     }
 }

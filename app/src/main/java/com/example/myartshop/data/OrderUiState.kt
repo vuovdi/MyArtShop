@@ -7,13 +7,7 @@ import com.example.myartshop.R
 /**
  * Data class that represents the current UI state
  */
-//data class Photo(
-//    @DrawableRes val imageResId: Int,
-//    val artist: String,
-//    val category: String,
-//    val name: String,
-//
-//)
+
 enum class Category(val iconRes: Int) {
     Nature(R.drawable.ic_nature),
     Food(R.drawable.ic_food),
@@ -39,10 +33,10 @@ data class Artist(
 
 data class CartItem(
     val photo: Photo,
-    val frameType: String,
-    val frameWidth: Int,
-    val photoSize: String,
-    val price: Double
+    val frameType: String = "mediuem",
+    val frameWidth: Int = 2,
+    val photoSize: String = "small",
+    val price: Double = 2.2
 )
 data class OrderUiState(
     val listOfPhotos: List<Photo> = emptyList(),

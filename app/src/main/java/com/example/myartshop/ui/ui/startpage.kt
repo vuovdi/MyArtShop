@@ -105,11 +105,11 @@ fun StartPageScreen(
                 )
             }
 
-//            ShoppingInfo(
-//                viewModel = viewModel,
-//                shoppingCart = shoppingCart,
-//                onRemoveItem = { cartItem -> viewModel.removeFromCart(cartItem) }
-//            )
+            ShoppingInfo(
+                viewModel = viewModel,
+                shoppingCart = shoppingCart,
+                onRemoveItem = { cartItem -> viewModel.removeFromCart(cartItem) }
+            )
 
             Button(
                 modifier = modifier
