@@ -20,8 +20,11 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -122,8 +125,13 @@ fun SelectedPhotoScreen(
                         onSelectionChanged = { selectedFrameWidth = it }
                     )
                 }
-                val totalPrice = calculateTotalPrice(selectedFrameType, selectedFrameWidth, selectedPhotoSize)
-                Text(text = stringResource(R.string.price_photo_and_frame ,"$totalPrice"))
+                var totalPrice by remember { mutableFloatStateOf(0f) } // Initialiser totalPrice
+
+                LaunchedEffect(selectedFrameType, selectedFrameWidth, selectedPhotoSize) {
+                    totalPrice = calculateTotalPrice(selectedFrameType, selectedFrameWidth, selectedPhotoSize) +
+                            photo.price
+                }
+                Text(text = stringResource(R.string.price_photo_and_frame, totalPrice))
 
                 Button(
                     onClick = {
@@ -211,9 +219,9 @@ fun SelectOptionScreen(
 // Calculate total price based on photo price and frame choices
 fun calculateTotalPrice(frameType: String, frameWidth: String, photoSize: String): Float {
     val frameTypePrice = when (frameType) {
-        "wood" -> 50f
-        "metal" -> 60f
-        "plastic" -> 40f
+        "Wood" -> 50f
+        "Metal" -> 60f
+        "Plastic" -> 40f
         else -> 0f
     }
 
@@ -225,9 +233,9 @@ fun calculateTotalPrice(frameType: String, frameWidth: String, photoSize: String
     }
 
     val photoSizePrice = when (photoSize) {
-        "small" -> 20f
-        "medium" -> 30f
-        "large" -> 40f
+        "Small" -> 20f
+        "Medium" -> 30f
+        "Large" -> 40f
         else -> 0f
     }
 

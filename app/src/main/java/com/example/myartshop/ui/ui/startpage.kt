@@ -249,7 +249,7 @@ fun ShoppingCartItems(
         }
     }
 }
-/*@Preview
+@Preview
 @Composable
 fun MyArtShopPreview() {
     val viewModel: OrderViewModel = viewModel()
@@ -263,4 +263,3 @@ fun MyArtShopPreview() {
         }
     }
 }
-*/
