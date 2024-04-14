@@ -33,9 +33,9 @@ data class Artist(
 
 data class CartItem(
     val photo: Photo,
-    val frameType: String = "mediuem",
-    val frameWidth: Int = 2,
-    val photoSize: String = "small",
+    val frameType: String,
+    val frameWidth: Int,
+    val photoSize: String,
     val price: Float
 )
 data class OrderUiState(

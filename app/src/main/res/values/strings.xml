@@ -14,7 +14,6 @@
     <string name="back_button">Back</string>
 
     // Start page strings
-
     <string name="main_page">Home</string>
     <string name="choose_category">See photos based on</string>
     <string name="artist">Artist</string>
@@ -98,8 +97,11 @@
 
     //Selected Image screen
     <string name="details">Photo details</string>
-    <string name="various_details">Artist: Un Known, price: 100NOK</string>
+    <string name="artist_name">Artist: %d</string>
+    <string name="photo_price">price: %.2f</string>
     <string name="frame_options">Choose frame options: </string>
     <string name="price_photo_and_frame">Calculated price: </string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="home">Home</string>
 
 </resources>

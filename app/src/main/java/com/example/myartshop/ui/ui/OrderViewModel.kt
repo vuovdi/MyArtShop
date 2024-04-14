@@ -1,7 +1,9 @@
 package com.example.myartshop.ui
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
+import com.example.myartshop.R
 import com.example.myartshop.data.Artist
 import com.example.myartshop.data.CartItem
 import com.example.myartshop.data.Category
@@ -53,10 +55,6 @@ class OrderViewModel: ViewModel() {
         _uiState.value = _uiState.value.copy(listOfPhotos = listOfPhotos)
     }
 
-//    fun selectPhoto(photo: Photo) {
-//        selectedPhoto.value = photo
-//    }
-//
 
     fun addToCart(frameType: String, frameWidth: Int, photoSize: String, price: Float) {
         val photo = selectedPhoto ?: return  // If selectedPhoto is null, return early
@@ -79,17 +77,6 @@ class OrderViewModel: ViewModel() {
         }
 
     }
-//    fun sumPrice(): Float {
-//        return shoppingCart.value.sumOf { it.price.toInt() }.toFloat()
-//    }
-
-//    fun sumPrice(): Float {
-//        var totalPrice = 0f
-//        for (cartItem in shoppingCart.value) {
-//            totalPrice += cartItem.price
-//        }
-//        return totalPrice
-//    }
 
     fun sumPrice(): Float {
         var totalPrice = 0f
@@ -98,6 +85,11 @@ class OrderViewModel: ViewModel() {
         }
         return totalPrice
     }
+
+    fun resetOrder() {
+        shoppingCart.value = emptyList()
+    }
+
 
 }
 
