@@ -92,7 +92,7 @@ class OrderViewModel: ViewModel() {
     fun sumPrice(): Float {
         var totalPrice = 0f
         shoppingCart.value.forEach {element ->
-            totalPrice += element.price
+            totalPrice =  element.frameAdditionalPrice
         }
         return totalPrice
     }
