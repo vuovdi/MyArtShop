@@ -37,9 +37,10 @@ object DataSource {
         CartItem(
             photo,
             frameType = "Wood", // Sett riktig rammetype her
-            frameWidth = 2, // Sett riktig rammebredde her
+            frameWidth = "10mm", // Sett riktig rammebredde her
             photoSize = "Medium", // Sett riktig fotosize her
-            price = 23.2f // Bruk en funksjon for å beregne prisen
+            price = 23.2f, // Bruk en funksjon for å beregne prisen
+            frameAdditionalPrice = 35.0f
         )
     }
 

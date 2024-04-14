@@ -1,5 +1,6 @@
 package com.example.myartshop
 
+import com.example.myartshop.ui.OrderViewModel
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -9,9 +10,10 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class OrderViewModelTest {
+    private val viewModel = OrderViewModel()
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun orderViewModel_photoAddedToCart() {
+        var currentOrderUiState = viewModel.uiState.value
     }
 }

@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
@@ -30,24 +28,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myartshop.R
+import com.example.myartshop.data.CartItem
 import com.example.myartshop.data.DataSource
-import com.example.myartshop.data.DataSource.listOfPhotos
 import com.example.myartshop.data.Photo
-import com.example.myartshop.ui.ui.theme.MyArtShopTheme
+import com.example.myartshop.ui.OrderViewModel
 
 
 @Composable
-fun SelectedPhotoScreen(photo: Photo?, onAddToCartClicked: (Photo?) -> Unit) {
+fun SelectedPhotoScreen(
+    photo: Photo?, viewModel: OrderViewModel, onAddToCartClicked: (Photo) -> Unit
+) {
     val dataSource = DataSource
+    var selectedFrameType by rememberSaveable { mutableStateOf("") }
+    var selectedFrameWidth by rememberSaveable { mutableStateOf("") }
+    var selectedPhotoSize by rememberSaveable { mutableStateOf("") }
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -97,28 +98,43 @@ fun SelectedPhotoScreen(photo: Photo?, onAddToCartClicked: (Photo?) -> Unit) {
                 Row {
                     SelectOptionScreen(
                         options = dataSource.frame_type.map { stringResource(it) },
-                        onSelectionChanged = { /* handle selection change */ }
+                        onSelectionChanged = { selectedFrameType = it }
                     )
 
                     // Radio buttons for photo_size_size
                     SelectOptionScreen(
                         options = dataSource.photo_size.map { stringResource(it) },
-                        onSelectionChanged = { /* handle selection change */ }
+                        onSelectionChanged = { selectedPhotoSize = it }
                     )
 
                     // Radio buttons for frame_size
                     SelectOptionScreen(
                         options = dataSource.frame_size.map { stringResource(it) },
-                        onSelectionChanged = { /* handle selection change */ }
+                        onSelectionChanged = { selectedFrameWidth = it }
                     )
                 }
-                Text(text = stringResource(R.string.price_photo_and_frame))
-
-
-                //Spacer(modifier = Modifier.height(16.dp))
+                val totalPrice = calculateTotalPrice(selectedFrameType, selectedFrameWidth, selectedPhotoSize)
+                Text(text = stringResource(R.string.price_photo_and_frame ,"$totalPrice"))
 
                 Button(
-                    onClick = { onAddToCartClicked(photo) },
+                    onClick = {
+                        val cartItem = CartItem(
+                            photo = photo,
+                            frameType = selectedFrameType,
+                            frameWidth = selectedFrameWidth,
+                            photoSize = selectedPhotoSize,
+                            price = photo.price,
+                            frameAdditionalPrice = totalPrice
+                        )
+                        viewModel.addToCart(
+                            selectedPhoto = photo,
+                            frameType = selectedFrameType,
+                            frameWidth = selectedFrameWidth,
+                            photoSize = selectedPhotoSize,
+                            price = photo.price,
+                            frameAdditionalPrice = totalPrice
+                        )
+                              },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
@@ -128,7 +144,6 @@ fun SelectedPhotoScreen(photo: Photo?, onAddToCartClicked: (Photo?) -> Unit) {
             }
         }
 
-        //Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedButton(
             onClick = { /*TODO*/ },
@@ -181,6 +196,33 @@ fun SelectOptionScreen(
     }
 }
 
+// Calculate total price based on photo price and frame choices
+fun calculateTotalPrice(frameType: String, frameWidth: String, photoSize: String): Float {
+    val frameTypePrice = when (frameType) {
+        "wood" -> 50f
+        "metal" -> 60f
+        "plastic" -> 40f
+        else -> 0f
+    }
+
+    val frameWidthPrice = when(frameWidth) {
+        "10 mm" -> 10f
+        "15 mm" -> 20f
+        "20 mm" -> 30f
+        else -> 0f
+    }
+
+    val photoSizePrice = when (photoSize) {
+        "small" -> 20f
+        "medium" -> 30f
+        "large" -> 40f
+        else -> 0f
+    }
+
+    return frameTypePrice + frameWidthPrice + photoSizePrice
+}
+
+/*
 @Preview
 @Composable
 fun SelectedImagePreview() {
@@ -190,3 +232,4 @@ fun SelectedImagePreview() {
         )
     }
 }
+*/

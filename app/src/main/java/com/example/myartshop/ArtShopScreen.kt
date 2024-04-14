@@ -51,6 +51,7 @@ import com.example.myartshop.ui.ui.SelectArtistPage
 import com.example.myartshop.ui.ui.SelectedPhotoScreen
 import com.example.myartshop.ui.ui.StartPageScreen
 import com.example.myartshop.ui.ui.SummaryScreen
+import com.example.myartshop.ui.ui.calculateTotalPrice
 
 enum class ArtShopScreen(@StringRes val title:Int) {
     Start(title = R.string.main_page),
@@ -176,14 +177,23 @@ fun ArtShopApp(
 
             composable(route = ArtShopScreen.PhotoViewer.name) {
                 val selectedPhoto = viewModel.selectedPhoto
+                val selectedFrameOptions = viewModel.selectedFrameOptions
+                val frameAdditionalPrice = calculateTotalPrice(
+                    selectedFrameOptions.value?.first ?: "",
+                    selectedFrameOptions.value?.second ?: "",
+                    selectedFrameOptions.value?.third ?: ""
+                )
                 SelectedPhotoScreen(
                     photo = selectedPhoto,
-                    onAddToCartClicked = {photo ->
+                    viewModel = viewModel,
+                    onAddToCartClicked = { photo ->
                         viewModel.addToCart(
-                            frameType = "mediuem",
-                            frameWidth = 2,
-                            photoSize = "small",
-                            price = photo!!.price)
+                            selectedPhoto = photo,
+                            frameType = selectedFrameOptions.value?.first ?: "medium",
+                            frameWidth = selectedFrameOptions.value?.second ?: "10mm",
+                            photoSize = selectedFrameOptions.value?.third ?: "small",
+                            price = photo!!.price,
+                            frameAdditionalPrice = frameAdditionalPrice)
                     })
             }
 

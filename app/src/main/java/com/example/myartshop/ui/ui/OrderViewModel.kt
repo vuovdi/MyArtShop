@@ -17,7 +17,7 @@ class OrderViewModel: ViewModel() {
     val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
     private val listOfPhotos = DataSource.listOfPhotos
-    val selectedFrameOptions = mutableStateOf<Pair<String, Int>?>(null)
+    val selectedFrameOptions = mutableStateOf<Triple<String, String, String>?>(null)
     val shoppingCart = mutableStateOf<List<CartItem>>(emptyList())
     private var _selectedArtist: Artist? = null
     private var _selectedCategory: Category? = null
@@ -58,9 +58,16 @@ class OrderViewModel: ViewModel() {
 //    }
 //
 
-    fun addToCart(frameType: String, frameWidth: Int, photoSize: String, price: Float) {
+    fun addToCart(
+        selectedPhoto: Photo?,
+        frameType: String,
+        frameWidth: String,
+        photoSize: String,
+        price: Float,
+        frameAdditionalPrice: Float
+    ) {
         val photo = selectedPhoto ?: return  // If selectedPhoto is null, return early
-        val cartItem = CartItem(photo, frameType, frameWidth, photoSize, price)
+        val cartItem = CartItem(photo, frameType, frameWidth, photoSize, price, frameAdditionalPrice)
         shoppingCart.value += cartItem
     }
 
@@ -78,6 +85,10 @@ class OrderViewModel: ViewModel() {
             shoppingCart.value = currentCartItems
         }
 
+    }
+
+    fun updateFrameOptions(frameType: String, frameWidth: String, photoSize: String) {
+        selectedFrameOptions.value = Triple(frameType, frameWidth, photoSize)
     }
 //    fun sumPrice(): Float {
 //        return shoppingCart.value.sumOf { it.price.toInt() }.toFloat()

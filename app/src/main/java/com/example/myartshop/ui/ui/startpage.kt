@@ -163,7 +163,7 @@ fun ShoppingInfo(
         )
         Text(
 //            text = stringResource(R.string.total_price, viewModel.sumPrice()) Funksjonen er i viewModel, men funker ikke,
-            text = stringResource(R.string.total_price, 40),
+            text = stringResource(R.string.total_price),
             style = MaterialTheme.typography.bodyLarge,
             modifier = modifier.padding(5.dp)
         )
@@ -174,8 +174,8 @@ fun ShoppingInfo(
                 ShoppingCartItems(
                     imageRes = cartItem.photo.imageResId,
                     title = cartItem.photo.title,
-                    frameChoices = cartItem.frameType,
                     price = cartItem.price,
+                    frameAdditionalPrice = cartItem.price,
                     cartItem = cartItem
                 ) { onRemoveItem(cartItem) } // Send med onRemoveItem-funksjonen
 
@@ -189,8 +189,8 @@ fun ShoppingInfo(
 fun ShoppingCartItems(
     imageRes: Int,
     title: Int,
-    frameChoices: String,
     price: Float,
+    frameAdditionalPrice: Float,
     cartItem: CartItem,
     onRemoveButtonClick: (CartItem) -> Unit
 ) {
@@ -216,7 +216,8 @@ fun ShoppingCartItems(
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.width(16.dp))
-
+            val totalPrice = price+frameAdditionalPrice
+            val frameChoices = "${cartItem.frameType}, ${cartItem.frameWidth}, ${cartItem.photoSize}"
             Column(modifier = Modifier
                 .weight(2f)
                 .fillMaxSize()) {
@@ -226,12 +227,12 @@ fun ShoppingCartItems(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = price.toString(),
-                    fontSize = 14.sp
+                    text = "$totalPrice",
+                    fontSize = 12.sp
                 )
                 Text(
                     text = frameChoices,
-                    fontSize = 14.sp
+                    fontSize = 8.sp
                 )
             }
             Spacer(modifier = Modifier.width(16.dp))
