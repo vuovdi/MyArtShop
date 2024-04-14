@@ -32,35 +32,42 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myartshop.R
 import com.example.myartshop.data.CartItem
 import com.example.myartshop.data.DataSource
+import com.example.myartshop.data.DataSource.listOfPhotos
 import com.example.myartshop.data.Photo
 import com.example.myartshop.ui.OrderViewModel
+import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 
 
 @Composable
 fun SelectedPhotoScreen(
-    photo: Photo?, viewModel: OrderViewModel, onAddToCartClicked: (Photo) -> Unit
-) {
+    photo: Photo?,
+    onAddToCartClicked: (Photo?) -> Unit,
+    viewModel: OrderViewModel,
+    onHomeClicked: () -> Unit) {
     val dataSource = DataSource
     var selectedFrameType by rememberSaveable { mutableStateOf("") }
     var selectedFrameWidth by rememberSaveable { mutableStateOf("") }
     var selectedPhotoSize by rememberSaveable { mutableStateOf("") }
+    val artistNameer = stringResource(id = photo!!.artist.nameResId)
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(start= 16.dp, end= 16.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = stringResource(photo!!.title),
+            text = stringResource(photo.title),
+//            text = artistNameer,
             style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 10.dp)
         )
 
         Card(
@@ -89,11 +96,13 @@ fun SelectedPhotoScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(8.dp)
             ) {
                 Text(text = stringResource(R.string.details))
-                Text(text = stringResource(R.string.various_details))
+//                Text(text = stringResource(R.string.artist_name, artistNameer))
                 Text(text = stringResource(R.string.frame_options))
+//                Text(text = stringResource(R.string.various_details))
+//                Text(text = stringResource(R.string.frame_options))
                 // Radio buttons for frame_type
                 Row {
                     SelectOptionScreen(
@@ -137,20 +146,23 @@ fun SelectedPhotoScreen(
                               },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .padding(top = 2.dp)
                 ) {
-                    Text("Add to cart")
+                    Text(stringResource(R.string.add_to_cart))
+
+                }
+                OutlinedButton(
+                    onClick = onHomeClicked,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp)
+                ) {
+                    Text(stringResource(R.string.home))
                 }
             }
         }
 
-
-        OutlinedButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Home")
-        }
+        //Spacer(modifier = Modifier.height(16.dp))
 
 
     }
@@ -165,27 +177,27 @@ fun SelectOptionScreen(
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Column(modifier = Modifier.padding(10.dp)) {
+        modifier = modifier
+            .padding(start = 10.dp, end = 10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally) {
             options.forEach { item ->
                 Row(
-                    modifier = Modifier.selectable(
+                    modifier = modifier.selectable(
                         selected = selectedValue == item,
                         onClick = {
                             selectedValue = item
                             onSelectionChanged(item)
                         }
                     ),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
                 ) {
                     RadioButton(
                         selected = selectedValue == item,
                         onClick = {
                             selectedValue = item
                             onSelectionChanged(item)
-                        }
+                        },
                     )
                     Text(
                         item,
@@ -194,7 +206,7 @@ fun SelectOptionScreen(
             }
         }
     }
-}
+
 
 // Calculate total price based on photo price and frame choices
 fun calculateTotalPrice(frameType: String, frameWidth: String, photoSize: String): Float {
@@ -222,14 +234,13 @@ fun calculateTotalPrice(frameType: String, frameWidth: String, photoSize: String
     return frameTypePrice + frameWidthPrice + photoSizePrice
 }
 
-/*
+
 @Preview
 @Composable
 fun SelectedImagePreview() {
     MyArtShopTheme(darkTheme = false){
         SelectedPhotoScreen(
-            listOfPhotos[0], onAddToCartClicked = {}
+            listOfPhotos[0], onAddToCartClicked = {}, onHomeClicked = {}
         )
     }
 }
-*/

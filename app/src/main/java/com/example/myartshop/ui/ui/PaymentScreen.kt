@@ -27,15 +27,10 @@ import com.example.myartshop.ui.ui.theme.MyArtShopTheme
 
 @Composable
 fun SummaryScreen(
-    orderUiState: OrderUiState,
     viewModel: OrderViewModel,
     onPay: () -> Unit,
     modifier: Modifier) {
-    var price = 0.0
-    for (cartItem in cartItems) {
-        price += cartItem.price
-        // Gjør noe med prisen, for eksempel vis den i loggen eller i grensesnittet
-    }
+    var price = viewModel.sumPrice()
     var photoNames = ""
     for (cartItem in cartItems) {
         val photoName = cartItem.photo.title
@@ -59,10 +54,9 @@ fun SummaryScreen(
         Text(
             text = "Price including TAX:",
         )
-
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Total price: ${price.toString()}",
+            text = "Total price: $price",
         )
         Spacer(modifier = Modifier.weight(1f))
         Divider()
@@ -111,14 +105,10 @@ fun SummaryItem(label: String, value: String, modifier: Modifier) {
 @Composable
 fun SummaryScreenPreview() {
     val viewModel: OrderViewModel = viewModel()
-    val listOfPhotos = DataSource.listOfPhotos
-    val cartItems = DataSource.cartItems
-
     val modifier = Modifier // Example modifier
 
     MyArtShopTheme {
         SummaryScreen(
-            orderUiState = OrderUiState(listOfPhotos = listOfPhotos, cartItems = cartItems),
             viewModel = viewModel,
             onPay  = {},
             modifier = modifier

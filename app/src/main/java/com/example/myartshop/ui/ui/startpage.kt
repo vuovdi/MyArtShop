@@ -162,8 +162,7 @@ fun ShoppingInfo(
             modifier = modifier.padding(5.dp)
         )
         Text(
-//            text = stringResource(R.string.total_price, viewModel.sumPrice()) Funksjonen er i viewModel, men funker ikke,
-            text = stringResource(R.string.total_price),
+            text = stringResource(R.string.total_price, viewModel.sumPrice()),
             style = MaterialTheme.typography.bodyLarge,
             modifier = modifier.padding(5.dp)
         )
@@ -245,18 +244,6 @@ fun ShoppingCartItems(
             Spacer(modifier = Modifier.width(16.dp))
         }
 
-/** DETTE FUNKA IKKE  SKJØNNER IKKE HVORFOR,
- * */
-//            Column(
-//                modifier = Modifier.weight(2f)
-//            ) {
-//                Text(text = stringResource(R.string.Prize, price))
-//                Text(text = stringResource(R.string.Frame_choices, frameChoices))
-//                Text(text = stringResource(R.string.Prize, price))
-//            }
-
-        }
-    }
 
 @Preview
 @Composable

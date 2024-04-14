@@ -194,7 +194,9 @@ fun ArtShopApp(
                             photoSize = selectedFrameOptions.value?.third ?: "small",
                             price = photo!!.price,
                             frameAdditionalPrice = frameAdditionalPrice)
-                    })
+                        navController.navigate(ArtShopScreen.Start.name)
+                    },
+                    onHomeClicked = {navController.navigate(ArtShopScreen.Start.name)})
             }
 
 
@@ -208,14 +210,11 @@ fun ArtShopApp(
 
                 if (showPopupDialog) {
                     PopupDialog(
+                        viewModel = viewModel,
                         navController = navController
                     )
                 } else {
                     SummaryScreen(
-                        orderUiState = OrderUiState(
-                            listOfPhotos = listOfPhotos,
-                            cartItems = cartItems
-                        ),
                         viewModel = viewModel,
                         onPay = { showPopupDialog = true  }, // Set showPopupDialog to true
                         modifier = modifier
@@ -229,6 +228,7 @@ fun ArtShopApp(
 
 @Composable
 fun PopupDialog(
+    viewModel: OrderViewModel,
     navController: NavHostController,
 ) {
     Dialog(onDismissRequest = { navController.popBackStack(ArtShopScreen.Start.name, inclusive = false)}) {
@@ -258,7 +258,9 @@ fun PopupDialog(
 
 
                 TextButton(
-                    onClick = { navController.popBackStack(ArtShopScreen.Start.name, inclusive = false) },
+                    onClick = {
+                        viewModel.resetOrder()
+                        navController.popBackStack(ArtShopScreen.Start.name, inclusive = false) },
                     modifier = Modifier.padding(8.dp),
                 ) {
                     Text(
