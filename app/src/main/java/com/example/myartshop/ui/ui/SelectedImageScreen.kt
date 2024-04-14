@@ -240,7 +240,7 @@ fun calculateTotalPrice(frameType: String, frameWidth: String, photoSize: String
 fun SelectedImagePreview() {
     MyArtShopTheme(darkTheme = false){
         SelectedPhotoScreen(
-            listOfPhotos[0], onAddToCartClicked = {}, onHomeClicked = {}
+            listOfPhotos[0], onAddToCartClicked = {}, viewModel = OrderViewModel(),onHomeClicked = {}
         )
     }
 }

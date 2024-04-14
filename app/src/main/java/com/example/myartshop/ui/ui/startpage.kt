@@ -196,16 +196,17 @@ fun ShoppingCartItems(
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant),
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Row (
+        Row(
 //            modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Image(
                 painter = painterResource(imageRes),
                 contentDescription = "oki",
@@ -215,11 +216,14 @@ fun ShoppingCartItems(
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.width(16.dp))
-            val totalPrice = price+frameAdditionalPrice
-            val frameChoices = "${cartItem.frameType}, ${cartItem.frameWidth}, ${cartItem.photoSize}"
-            Column(modifier = Modifier
-                .weight(2f)
-                .fillMaxSize()) {
+            val totalPrice = price + frameAdditionalPrice
+            val frameChoices =
+                "${cartItem.frameType}, ${cartItem.frameWidth}, ${cartItem.photoSize}"
+            Column(
+                modifier = Modifier
+                    .weight(2f)
+                    .fillMaxSize()
+            ) {
                 Text(
                     text = stringResource(title),
                     fontSize = 16.sp,
@@ -243,9 +247,9 @@ fun ShoppingCartItems(
             }
             Spacer(modifier = Modifier.width(16.dp))
         }
-
-
-@Preview
+    }
+}
+/*@Preview
 @Composable
 fun MyArtShopPreview() {
     val viewModel: OrderViewModel = viewModel()
@@ -259,3 +263,4 @@ fun MyArtShopPreview() {
         }
     }
 }
+*/

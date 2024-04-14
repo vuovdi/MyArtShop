@@ -100,5 +100,6 @@
     <string name="various_details">Artist: Un Known, price: 100NOK</string>
     <string name="frame_options">Choose frame options: </string>
     <string name="price_photo_and_frame">Calculated price: </string>
-
+    <string name="home">Home</string>
+    <string name="add_to_cart">Add to cart</string>
 </resources>
