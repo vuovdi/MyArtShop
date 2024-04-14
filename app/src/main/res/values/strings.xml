@@ -26,7 +26,7 @@
     <string name="chosen_photo">Chosen Photo</string>
     <string name="shopping_cart">My shopping cart</string>
     <string name="chosen_photos">Photos in cart: %d</string>
-    <string name="total_price">Total price inc. mva: %d</string>
+    <string name="total_price">Total price inc. mva: %.2f</string>
     <string name="subtotal_price">Subtotal %s</string>
     <string name="payment">Payment</string>
 <!--    <string name="title">Title: %d</string>-->

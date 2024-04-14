@@ -90,7 +90,16 @@ class OrderViewModel: ViewModel() {
 //        }
 //        return totalPrice
 //    }
+
+    fun sumPrice(): Float {
+        var totalPrice = 0f
+        shoppingCart.value.forEach {element ->
+            totalPrice += element.price
+        }
+        return totalPrice
     }
+
+}
 
 
 

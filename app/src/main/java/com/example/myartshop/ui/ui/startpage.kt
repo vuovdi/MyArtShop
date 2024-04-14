@@ -162,8 +162,7 @@ fun ShoppingInfo(
             modifier = modifier.padding(5.dp)
         )
         Text(
-//            text = stringResource(R.string.total_price, viewModel.sumPrice()) Funksjonen er i viewModel, men funker ikke,
-            text = stringResource(R.string.total_price, 40),
+            text = stringResource(R.string.total_price, viewModel.sumPrice()),
             style = MaterialTheme.typography.bodyLarge,
             modifier = modifier.padding(5.dp)
         )
