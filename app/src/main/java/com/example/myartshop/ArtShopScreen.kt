@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -28,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -84,6 +86,14 @@ fun ArtshopAppBar(
                         contentDescription = stringResource(R.string.back_button)
                     )
                 }
+            } else {
+                Icon(
+                    painter = painterResource(R.drawable.artshopicon2),
+                    contentDescription = null,
+                    modifier = modifier
+                        .size(40.dp)
+                        .padding(4.dp)
+                )
             }
         }
     )
@@ -249,7 +259,9 @@ fun PopupDialog(
             ) {
                 Text(
                     text = "Your payment was successful",
-                    modifier = Modifier.padding(16.dp).align(Alignment.Start),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.Start),
                     color = MaterialTheme.colorScheme.onPrimary)
                 Text(
                     text = "Thank you for choosing us as your art provider",
